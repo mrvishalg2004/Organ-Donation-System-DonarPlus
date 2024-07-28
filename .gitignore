@@ -1,0 +1,7 @@
+"node_modules/" 
+"app/node_modules/public-encrypt/test/test_rsa_privkey.pem" 
+
+.DS_Store
+
+.env
+node_modules

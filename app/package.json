@@ -1,0 +1,49 @@
+{
+  "name": "DonarPlus",
+  "version": "1.0.0",
+  "description": "A platform connecting organ donor and acceptor technology",
+  "main": "../app/src/main.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack serve --config webpack.config.js",
+    "start": "npm run build && node dist/bundle.js"
+  },
+  "author": "Sharayu Meghare, Vishal Golhar",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^12.0.2",
+    "path-browserify": "^1.0.1",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "assert": "^2.1.0",
+    "async_hooks": "^1.0.0",
+    "bl": "^4.0.3",
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "dotenv-webpack": "^8.1.0",
+    "express": "^4.17.1",
+    "https-browserify": "^1.0.0",
+    "mongoose": "^7.1.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.10.3",
+    "os-browserify": "^0.3.0",
+    "path": "^0.12.7",
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "semver": "^7.3.5",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "timers-browserify": "^2.0.12",
+    "url": "^0.11.3"
+  }
+}
+

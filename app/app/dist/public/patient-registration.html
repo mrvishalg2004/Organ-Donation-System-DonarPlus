@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+
+    <link rel="icon" href="images/organ-donation-logo-new.svg">
+    <title>Patient Registration</title>
+    <style>
+        .hidden { display: none; }
+        .form-group { margin-bottom: 15px; }
+        .form-bg { padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(13,110,253); }
+        .btn-center { display: flex; justify-content: center; margin-top: 20px; }
+        .btn-primary { padding: 10px 20px; margin: 0 10px; }
+        .btn-back { margin-right: 10px; }
+        .is-invalid { border: 1px solid red; }
+    </style>
+</head>
+<body>
+<!-- start of navigation -->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <a href="index.html"><img class="nav-logo" src="images/logo bg.png" alt="DonarPlus"></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- end of navigation -->
+
+<main>
+    <div class="container">
+        <div class="row center-box">
+            <h3>Register an Organ Recipient</h3>
+            <div class="col-md-4 form-bg">
+                <!-- Patient Registration Form -->
+                <form id="patientRegistrationForm">
+                    <!-- Step 1: Personal Information -->
+                    <div id="step1">
+                        <h2>Personal Information</h2>
+                        <div class="form-group">
+                            <label for="PatientFullName">Full Name:</label>
+                            <input type="text" id="PatientFullName" name="fullname" class="form-control" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="PatientAge">Age:</label>
+                            <input type="number" id="PatientAge" name="age" class="form-control" placeholder="Age" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender:</label>
+                            <div id="group">
+                                <label><input type="radio" name="gender" value="Male" required> <span>Male</span></label>
+                                <label><input type="radio" name="gender" value="Female" required> <span>Female</span></label>
+                                <label><input type="radio" name="gender" value="Others" required> <span>Others</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="PatientAadhar">Aadhar Card No:</label>
+                            <input type="text" id="PatientAadhar" name="aadhar" class="form-control" placeholder="Aadhar Card No" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="PatientPhone">Phone Number:</label>
+                            <input type="text" id="PatientPhone" name="phone" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="PatientEmail">Email Address:</label>
+                            <input type="email" id="PatientEmail" name="email" class="form-control" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="PatientAddress">Home Address:</label>
+                            <input type="text" id="PatientAddress" name="address" class="form-control" placeholder="Home Address" required>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(1)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Medical History Information -->
+                    <div id="step2" class="hidden">
+                        <h2>Medical History Information</h2>
+                        <div class="form-group">
+                            <label for="BloodType">Blood Type:</label>
+                            <select id="BloodType" name="blood_type" class="form-control" required>
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="MedicalHistory">Medical History:</label>
+                            <textarea id="MedicalHistory" name="medical_history" class="form-control" placeholder="Medical History" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="InfectionDiseases">Infection Diseases:</label>
+                            <textarea id="InfectionDiseases" name="infection_diseases" class="form-control" placeholder="Infection Diseases" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="SurgicalHistory">Surgical History:</label>
+                            <textarea id="SurgicalHistory" name="surgical_history" class="form-control" placeholder="Surgical History" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Allergies">Allergies:</label>
+                            <textarea id="Allergies" name="allergies" class="form-control" placeholder="Allergies" required></textarea>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(1)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(2)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Lifestyle Information -->
+                    <div id="step3" class="hidden">
+                        <h2>Lifestyle Information</h2>
+                        <div class="form-group">
+                            <label for="SmokingStatus">Smoking Status:</label>
+                            <select id="SmokingStatus" name="smoking_status" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="AlcoholConsumption">Alcohol Consumption:</label>
+                            <select id="AlcoholConsumption" name="alcohol_consumption" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="DrugUse">Drug Use:</label>
+                            <select id="DrugUse" name="drug_use" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="DietExercise">Diet and Exercise Habit:</label>
+                            <select id="DietExercise" name="diet_exercise" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(2)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(3)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Organ-Specific Information -->
+                    <div id="step4" class="hidden">
+                        <h2>Organ-Specific Information</h2>
+                        <div class="form-group">
+                            <label for="OrganRequired">Organ Required:</label>
+                            <select id="OrganRequired" name="organ_required" class="form-control" required>
+                                <option value="">Select Organ</option>
+                                <option value="Heart">Heart</option>
+                                <option value="Liver">Liver</option>
+                                <option value="Kidney">Kidney</option>
+                                <option value="Lung">Lung</option>
+                                <option value="Pancreas">Pancreas</option>
+                                <option value="Intestine">Intestine</option>
+                            </select>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="OrganRequired">Organ Required:</label>
+                            <input type="text" id="OrganRequired" name="organ_required" class="form-control" placeholder="Organ Required" required>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="Reason">Reason for Organ Transplant:</label>
+                            <textarea id="Reason" name="reason" class="form-control" placeholder="Reason for Organ Transplant" required></textarea>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(3)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(4)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Consent and Legal Information -->
+                    <div id="step5" class="hidden">
+                        <h2>Consent and Legal Information</h2>
+                        <div class="form-group">
+                            <label for="Consent">Consent to Data Usage:</label>
+                            <textarea id="Consent" name="consent" class="form-control" placeholder="Consent to Data Usage" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="LegalInformation">Legal Information:</label>
+                            <textarea id="LegalInformation" name="legal_information" class="form-control" placeholder="Legal Information" required></textarea>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(4)">Back</button>
+                            <button type="submit" class="btn btn-primary register">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function showStep(step) {
+        document.querySelectorAll('[id^="step"]').forEach(function (element) {
+            element.classList.add('hidden');
+        });
+        document.getElementById('step' + step).classList.remove('hidden');
+    }
+
+    function validateStep(step) {
+        const form = document.getElementById('patientRegistrationForm');
+        const inputs = form.querySelectorAll('#step' + step + ' input, #step' + step + ' textarea, #step' + step + ' select');
+        let isValid = true;
+
+        inputs.forEach(function (input) {
+            if (input.required && !input.value) {
+                isValid = false;
+                input.classList.add('is-invalid');
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+
+        if (isValid) {
+            showStep(step + 1);
+        }
+    }
+
+    document.getElementById('patientRegistrationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/api/patient/register', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Patient registered successfully!');
+                window.location.href = 'success.html';  // Redirect to success page
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting the form.');
+        });
+    });
+
+    // Initialize form to show the first step
+    showStep(1);
+</script>
+
+</body>
+</html>
+
+
+

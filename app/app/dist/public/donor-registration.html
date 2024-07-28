@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+    <link rel="icon" href="../images/organ-donation-logo-new.svg">
+    <title>Donor Registration</title>
+    <style>
+        .hidden { display: none; }
+        .form-group { margin-bottom: 15px; }
+        .form-bg { padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(24, 51, 255, 0.1); }
+        .btn-center { display: flex; justify-content: center; margin-top: 20px; }
+        .btn-primary { padding: 10px 20px; margin: 0 10px; }
+        .btn-back { margin-right: 10px; }
+        .alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .alert-success { background-color: #d4edda; color: #155724; }
+        .alert-error { background-color: #f8d7da; color: #721c24; }
+        .is-invalid { border-color: #dc3545; }
+    </style>
+</head>
+<body>
+<!-- start of navigation -->
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <a href="index.html"><img class="nav-logo" src="../images/logo bg.png" alt="DonarPlus"></a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- end of navigation -->
+
+<main>
+    <div class="container">
+        <div class="row center-box">
+            <h3>Register an Organ Donor</h3>
+            <div class="col-md-4 form-bg">
+                <!-- Success/Error Messages -->
+                <div id="message" class="alert hidden"></div>
+
+                <!-- Donor Registration Form -->
+                <form id="donorRegistrationForm">
+                    <!-- Step 1: Personal Information -->
+                    <div id="step1">
+                        <h2>Personal Information</h2>
+                        <div class="form-group">
+                            <label for="DonorFullName">Full Name:</label>
+                            <input type="text" id="DonorFullName" name="fullname" class="form-control" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="DonorAge">Age:</label>
+                            <input type="number" id="DonorAge" name="age" class="form-control" placeholder="Age" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Gender:</label>
+                            <div id="group">
+                                <label><input type="radio" name="gender" value="Male" required> <span>Male</span></label>
+                                <label><input type="radio" name="gender" value="Female" required> <span>Female</span></label>
+                                <label><input type="radio" name="gender" value="Others" required> <span>Others</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="DonorAadhar">Aadhar Card No:</label>
+                            <input type="text" id="DonorAadhar" name="aadhar" class="form-control" placeholder="Aadhar Card No" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="DonorPhone">Phone Number:</label>
+                            <input type="text" id="DonorPhone" name="phone" class="form-control" placeholder="Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="DonorEmail">Email Address:</label>
+                            <input type="email" id="DonorEmail" name="email" class="form-control" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="DonorAddress">Home Address:</label>
+                            <input type="text" id="DonorAddress" name="address" class="form-control" placeholder="Home Address" required>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(1)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Medical History Information -->
+                    <div id="step2" class="hidden">
+                        <h2>Medical History Information</h2>
+                        <div class="form-group">
+                            <label for="BloodType">Blood Type:</label>
+                            <select id="BloodType" name="blood_type" class="form-control" required>
+                                <option value="">Select Blood Type</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="MedicalHistory">Medical History:</label>
+                            <textarea id="MedicalHistory" name="medical_history" class="form-control" placeholder="Medical History" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="InfectionDiseases">Infection Diseases:</label>
+                            <textarea id="InfectionDiseases" name="infection_diseases" class="form-control" placeholder="Infection Diseases" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="SurgicalHistory">Surgical History:</label>
+                            <textarea id="SurgicalHistory" name="surgical_history" class="form-control" placeholder="Surgical History" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Allergies">Allergies:</label>
+                            <textarea id="Allergies" name="allergies" class="form-control" placeholder="Allergies" required></textarea>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(1)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(2)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Lifestyle Information -->
+                    <div id="step3" class="hidden">
+                        <h2>Lifestyle Information</h2>
+                        <div class="form-group">
+                            <label for="SmokingStatus">Smoking Status:</label>
+                            <select id="SmokingStatus" name="smoking_status" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="AlcoholConsumption">Alcohol Consumption:</label>
+                            <select id="AlcoholConsumption" name="alcohol_consumption" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="DrugUse">Drug Use:</label>
+                            <select id="DrugUse" name="drug_use" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="DietExercise">Diet and Exercise Habit:</label>
+                            <select id="DietExercise" name="diet_exercise" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(2)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(3)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Organ-Specific Information -->
+                    <div id="step4" class="hidden">
+                        <h2>Organ-Specific Information</h2>
+                        <div class="form-group">
+                            <label for="OrgansToDonate">Organs to Donate:</label>
+                            <select id="OrgansToDonate" name="organ_to_donate" class="form-control" required>
+                                <option value="">Select Organ</option>
+                                <option value="Heart">Heart</option>
+                                <option value="Liver">Liver</option>
+                                <option value="Kidney">Kidney</option>
+                                <option value="Lungs">Lungs</option>
+                                <option value="Pancreas">Pancreas</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ConditionsForDonation">Conditions for Donation:</label>
+                            <textarea id="ConditionsForDonation" name="conditions_for_donation" class="form-control" placeholder="Conditions for Donation" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="Medications">Medications:</label>
+                            <textarea id="Medications" name="medications" class="form-control" placeholder="Medications" required></textarea>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(3)">Back</button>
+                            <button type="button" class="btn btn-primary register" onclick="validateStep(4)">Next</button>
+                        </div>
+                    </div>
+
+                    <!-- Step 5: Consent and Legal Information -->
+                    <div id="step5" class="hidden">
+                        <h2>Consent and Legal Information</h2>
+                        <div class="form-group">
+                            <label for="NextOfKin">Next of Kin:</label>
+                            <input type="text" id="NextOfKin" name="next_of_kin" class="form-control" placeholder="Next of Kin" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="RelationshipToDonor">Relationship to Donor:</label>
+                            <input type="text" id="RelationshipToDonor" name="relationship_to_donor" class="form-control" placeholder="Relationship to Donor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="NextOfKinPhone">Next of Kin Phone:</label>
+                            <input type="text" id="NextOfKinPhone" name="next_of_kin_phone" class="form-control" placeholder="Next of Kin Phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="NextOfKinEmail">Next of Kin Email:</label>
+                            <input type="email" id="NextOfKinEmail" name="next_of_kin_email" class="form-control" placeholder="Next of Kin Email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ConsentForDonation">Consent for Donation:</label>
+                            <select id="ConsentForDonation" name="consent_for_donation" class="form-control" required>
+                                <option value="">Select</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="btn-center">
+                            <button type="button" class="btn btn-secondary btn-back" onclick="showStep(4)">Back</button>
+                            <button type="submit" class="btn btn-primary register">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- JavaScript -->
+<script>
+    const donorRegistrationForm = document.getElementById('donorRegistrationForm');
+    const messageDiv = document.getElementById('message');
+
+    function showStep(step) {
+        for (let i = 1; i <= 5; i++) {
+            document.getElementById(`step${i}`).classList.add('hidden');
+        }
+        document.getElementById(`step${step}`).classList.remove('hidden');
+    }
+
+    function validateStep(step) {
+        const currentStep = document.getElementById(`step${step}`);
+        const inputs = currentStep.querySelectorAll('input, select, textarea');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!input.checkValidity()) {
+                input.classList.add('is-invalid');
+                isValid = false;
+            } else {
+                input.classList.remove('is-invalid');
+            }
+        });
+
+        if (isValid) {
+            showStep(step + 1);
+        }
+    }
+
+    donorRegistrationForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        
+        const formData = new FormData(donorRegistrationForm);
+        const jsonData = {};
+
+        formData.forEach((value, key) => {
+            jsonData[key] = value;
+        });
+
+        fetch('/api/donor/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(jsonData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                messageDiv.textContent = 'Donor registered successfully!';
+                messageDiv.classList.remove('hidden', 'alert-error');
+                messageDiv.classList.add('alert-success');
+                donorRegistrationForm.reset();
+                showStep(1);
+            } else {
+                messageDiv.textContent = 'Failed to register donor. Please try again.';
+                messageDiv.classList.remove('hidden', 'alert-success');
+                messageDiv.classList.add('alert-error');
+            }
+        })
+        .catch(error => {
+            messageDiv.textContent = 'An error occurred. Please try again.';
+            messageDiv.classList.remove('hidden', 'alert-success');
+            messageDiv.classList.add('alert-error');
+        });
+    });
+</script>
+</body>
+</html>
