@@ -159,6 +159,7 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
     }
 });
 
+
 // Get all donors
 app.get('/api/donors', async (req, res) => {
     try {

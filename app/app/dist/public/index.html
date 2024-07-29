@@ -116,7 +116,7 @@
         // Function to search for a donor
         function searchDonor() {
             const medicalID = document.getElementById('inputDonorMedicalID').value;
-            fetch('/search/donor', {
+            fetch('/api/donors', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
