@@ -1,4 +1,3 @@
-
 *{
     padding: 0;
     margin: 0;
@@ -28,45 +27,45 @@ header{
     background-color: #94e1ff;
     height: 110px;
     border-radius: 59px;
+    display: flex;
+    align-items: center;
 }
 
 .row.center-box{
     justify-content: center;
-  }
+}
 
+nav{
+    background-color: #94e1ff;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-#header {
-    overflow: visible;
-    position: relative;    
+nav a#logo {
+    margin-left: 20px;
 }
 
 img#logo{
-    width: 25%;
-    padding: 30px 20px;
+    height: 130px; /* Increased from 70px */
+    width: auto;
 }
 
 img#logo:hover{
     background: #94e1ff;
 }
 
-/* #primary-nav{
-    flex: auto;
-} */
-
-nav{
-    background-color: #94e1ff;
-    height: 80px;
-    width: 100%;
-}
-
 nav ul{
-    float: right;
+    display: flex;
+    align-items: center;
     margin-right: 50px;
 }
 
 nav ul li{
     display: inline-block;
-    line-height: 100px;
+    line-height: 80px;
     margin: 0 5px;
 }
 
@@ -76,10 +75,9 @@ nav ul li a{
     font-weight: 700;
     padding: 7px 12px;
     border-radius: 4px;
-    
 }
 
-a.active,a:hover{
+a.active, a:hover{
     color: #fff;
     background: #005f82;
     transition: .5s;
@@ -91,23 +89,10 @@ a.hover:hover{
     color: #fff;
 }
 
-
-/* ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-} */
 #slider{
     overflow: hidden;
     width: 100%;
 }
-
-/* #slider figure{
-    position: relative;
-    width: 80%;
-    margin: 0;
-    left: 0;
-} */
 
 #header-btn{
     position: absolute;
@@ -122,10 +107,8 @@ a.hover:hover{
     width: 90%;
 }
 
-
 .col-md-7.banner{
     height: 500px;
-    /* padding: 25px; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -150,7 +133,6 @@ a.hover:hover{
     margin: 20px;
 }
 
-
 .btn.btn-pledge{
     font-weight: 600;
     color: #fff;
@@ -166,6 +148,43 @@ a.hover:hover{
     padding: 15px 30px 15px 30px;
     font-weight: 600;
 }
+
+
+/* Existing CSS */
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    background-color: #28a745; /* Green color */
+    color: #fff;
+    border: none;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #218838; /* Darker green */
+    transform: scale(1.05);
+}
+
+/* Ensure the link inside the button inherits styles */
+.btn a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
 
 .container-bg{
     background-color: #d5ecf5;
@@ -202,7 +221,8 @@ a.hover:hover{
 }
 
 .content-box img{
-    width: 35%;
+    width: 50%; /* Adjusted width */
+    height: auto; /* Maintains aspect ratio */
     padding: 25px 0px;
 }
 
@@ -211,10 +231,9 @@ a.hover:hover{
 }
 
 .content-box.profile img{
-    width: 60%;
+    width: 100%; /* Adjusted width */
+    height: auto; /* Maintains aspect ratio */
 }
-
-/* Awareness content */
 
 .content-aware{
     margin: 20px;
@@ -237,38 +256,45 @@ a.hover:hover{
     font-weight: 600;
 }
 
-/* Contact content */
-
 .content-box.contact{
     margin: 100px 0px;
 }
 
-.accordian{
+.content-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.content-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.accordion{
     max-width: 1440px;
     border-radius: 8px;
     overflow: hidden;
     background-color: #005f82;
 }
 
-.accordian_label,
-.accordian_content{
+.accordion_label,
+.accordion_content{
     padding: 14px 20px;
 }
 
-.accordian_label{
+.accordion_label{
     display: block;
     color: #fff;
     font-weight: 600;
     cursor: pointer;
     position: relative;
-    transition: backgorund 0.1s;
+    transition: background 0.1s;
 }
 
-.accordian_label:hover{
+.accordion_label:hover{
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.accordian_label::after{
+.accordion_label::after{
     content: "";
     position: absolute;
     top:50%;
@@ -281,7 +307,7 @@ a.hover:hover{
     transition: transform 0.4s;
 }
 
-.accordian_content{
+.accordion_content{
     background: #e6f1f5;
     color: #005f82;
     padding: 15px 65px 15px 65px;
@@ -291,16 +317,15 @@ a.hover:hover{
     display: none;
 }
 
-.accordian_input{
+.accordion_input{
     display: none;
 }
 
-.accordian_input:checked ~ .accordian_content{
+.accordion_input:checked ~ .accordion_content{
     display: block;
-
 }
 
-.accordian_input:checked ~ .accordian_label::after{
+.accordion_input:checked ~ .accordion_label::after{
     transform: translateY(-50%) rotate(0.5turn);
 }
 
@@ -315,7 +340,12 @@ footer{
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 30px 0px 0px 0px;
+    margin: 30px 20px 20px 20px;
+}
+
+.footer-logo img{
+    height: 150px; /* Increase logo size in footer */
+    width: auto;
 }
 
 .footer-text{
@@ -339,8 +369,6 @@ footer{
     font-weight: 300;
 }
 
-/* Awareness page css */
-
 .toc {
     background: #f9f9f9;
     padding: 20px;
@@ -348,41 +376,37 @@ footer{
     margin-bottom: 20px;
     border-radius: 8px;
 }
+
 .toc h2 {
     font-size: 24px;
     margin-top: 0;
     margin-bottom: 10px;
     font-weight: 700;
 }
+
 .toc ul {
     list-style: none;
     padding-left: 0;
 }
+
 .toc li {
     margin-bottom: 8px;
     font-size: 18px;
 }
+
 .toc a {
     text-decoration: none;
     color: #007bff;
 }
+
 .toc a:hover {
     text-decoration: underline;
 }
+
 .card {
     display: none;
     background: #fff;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    margin-bottom: 20px;
-}
-.card h2 {
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-body {
-    font-family: 'Montserrat', sans-serif;
 }
