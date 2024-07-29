@@ -23,7 +23,7 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
         table { width: 100%; margin-bottom: 1rem; color: #212529; }
         th, td { padding: 0.75rem; vertical-align: top; border-top: 1px solid #dee2e6; }
-        thead th { vertical-align: bottom; }
+        thead th { vertical-align: bottom; color: black;}
         tbody + tbody { border-top: 2px solid #dee2e6; }
     </style>
 </head>
@@ -67,6 +67,7 @@
                                     <th>Name</th>
                                     <th>Age</th>
                                     <th>Blood Type</th>
+                                    <th>Organ needed</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,6 +85,7 @@
                                     <th>Name</th>
                                     <th>Age</th>
                                     <th>Blood Type</th>
+                                    <th>Organ to donate</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -123,71 +125,119 @@
     <script>
         async function fetchAndMatchData() {
             try {
-                const patientsResponse = await fetch('/api/patients'); // Adjust endpoint if needed
-                const donorsResponse = await fetch('/api/donors'); // Adjust endpoint if needed
+                // Fetch patients and donors data
+                const patientsResponse = await fetch('/api/patients'); // Ensure the endpoint is correct
+                const donorsResponse = await fetch('/api/donors'); // Ensure the endpoint is correct
                 
-                if (!patientsResponse.ok || !donorsResponse.ok) {
-                    throw new Error('Failed to fetch data');
+                // Check if the responses are successful
+                if (!patientsResponse.ok) {
+                    throw new Error(`Failed to fetch patients data: ${patientsResponse.statusText}`);
                 }
-
+                if (!donorsResponse.ok) {
+                    throw new Error(`Failed to fetch donors data: ${donorsResponse.statusText}`);
+                }
+        
+                // Parse the JSON data
                 const patients = await patientsResponse.json();
                 const donors = await donorsResponse.json();
-
+        
+                // Log the fetched data for debugging
+                console.log('Patients:', patients);
+                console.log('Donors:', donors);
+        
+                // Populate tables and perform matching
                 populateTables(patients, donors);
                 performMatching(patients, donors);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
+        
 
         function populateTables(patients, donors) {
             const patientsTableBody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
             const donorsTableBody = document.getElementById('donorsTable').getElementsByTagName('tbody')[0];
-
+        
             patientsTableBody.innerHTML = ''; // Clear existing data
             donorsTableBody.innerHTML = ''; // Clear existing data
-
+        
             patients.forEach(patient => {
                 const row = patientsTableBody.insertRow();
                 row.insertCell(0).textContent = patient.fullName;
                 row.insertCell(1).textContent = patient.age;
                 row.insertCell(2).textContent = patient.blood_type;
+                row.insertCell(3).textContent = patient.organ_needed;
             });
-
+        
             donors.forEach(donor => {
                 const row = donorsTableBody.insertRow();
-                row.insertCell(0).textContent = donor.fullName;
+                row.insertCell(0).textContent = donor.fullname;
                 row.insertCell(1).textContent = donor.age;
                 row.insertCell(2).textContent = donor.blood_type;
+                row.insertCell(3).textContent = donor.organ_to_donate;
             });
         }
-
+        
         function performMatching(patients, donors) {
             const transplantTableBody = document.getElementById('transplantTable').getElementsByTagName('tbody')[0];
             transplantTableBody.innerHTML = ''; // Clear any existing data
-
+        
             patients.forEach(patient => {
                 donors.forEach(donor => {
-                    const matchScore = calculateMatchScore(patient, donor);
-                    if (matchScore > 0) {
-                        const row = transplantTableBody.insertRow();
-                        row.insertCell(0).textContent = patient.fullName;
-                        row.insertCell(1).textContent = donor.fullName;
-                        row.insertCell(2).textContent = donor.organs ? donor.organs.join(', ') : '';
-                        row.insertCell(3).textContent = matchScore;
-                        row.insertCell(4).innerHTML = '<button class="btn btn-primary">Match</button>';
+                    // Check for both blood type and organ match
+                    const bloodTypeMatch = patient.blood_type === donor.blood_type;
+                    const organMatch = donor.organ_to_donate && patient.organ_needed && donor.organ_to_donate.includes(patient.organ_needed);
+                    
+                    if (bloodTypeMatch && organMatch) {
+                        const matchScore = calculateMatchScore(patient, donor);
+                        console.log(`Matching patient ${patient.fullName} with donor ${donor.fullname}: Score ${matchScore}`);
+                        if (matchScore > 0) {
+                            const row = transplantTableBody.insertRow();
+                            row.insertCell(0).textContent = patient.fullName;
+                            row.insertCell(1).textContent = donor.fullname;
+                            row.insertCell(2).textContent = donor.organ_to_donate;
+                            row.insertCell(3).textContent = matchScore;
+                            row.insertCell(4).innerHTML = '<button class="btn btn-primary">Match</button>';
+                        }
                     }
                 });
             });
         }
-
+        
         function calculateMatchScore(patient, donor) {
             let score = 0;
-            if (patient.blood_type === donor.blood_type) score += 10;
-            // Add more matching criteria as needed
+        
+            // Match based on blood type compatibility
+            if (isCompatibleBloodType(patient.blood_type, donor.blood_type)) {
+                score += 10;
+            }
+        
+            // Match based on organ needed and organ to donate
+            if (donor.organ_to_donate && patient.organ_needed) {
+                const organsDonorCanDonate = Array.isArray(donor.organ_to_donate) ? donor.organ_to_donate : [donor.organ_to_donate];
+                if (organsDonorCanDonate.includes(patient.organ_needed)) {
+                    score += 20; // Score for organ match
+                }
+            }
+        
             return score;
         }
-
+        
+        function isCompatibleBloodType(patientBloodType, donorBloodType) {
+            const compatibleBloodTypes = {
+                'O-': ['O-', 'O+', 'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+'],
+                'O+': ['O+', 'A+', 'B+', 'AB+'],
+                'A-': ['A-', 'A+', 'AB-', 'AB+'],
+                'A+': ['A+', 'AB+'],
+                'B-': ['B-', 'B+', 'AB-', 'AB+'],
+                'B+': ['B+', 'AB+'],
+                'AB-': ['AB-', 'AB+'],
+                'AB+': ['AB+']
+            };
+        
+            return compatibleBloodTypes[donorBloodType]?.includes(patientBloodType);
+        }        
+        
         window.onload = fetchAndMatchData;
     </script>
 </body>
