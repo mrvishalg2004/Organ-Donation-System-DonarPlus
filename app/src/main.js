@@ -1,3 +1,4 @@
+console.log("Hlwww")
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -174,6 +175,23 @@ app.get('/api/donors', async (req, res) => {
     }
 });
 
+// Search for a specific donor by aadhar number
+// Search for a specific donor by aadhar number
+app.post('/api/donor/search', async (req, res) => {
+    try {
+        const { aadhar } = req.body; // Get the aadhar number from the request body
+        const donor = await Donor.findOne({ aadhar });
+        if (!donor) {
+            return res.status(404).json({ error: 'Donor not found' });
+        }
+        res.json(donor);
+    } catch (err) {
+        console.error('Error searching donor:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 // Get all patients
 app.get('/api/patients', async (req, res) => {
     try {
@@ -188,6 +206,22 @@ app.get('/api/patients', async (req, res) => {
     }
 });
 
+// Search for a specific patient by aadhar number
+app.post('/api/patient/search', async (req, res) => {
+    try {
+        const { aadhar } = req.body; // Get the aadhar number from the request body
+        const patient = await Patient.findOne({ aadhar });
+        if (!patient) {
+            return res.status(404).json({ error: 'Patient not found' });
+        }
+        res.json(patient);
+    } catch (err) {
+        console.error('Error searching patient:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 // Additional routes for other HTML files
 app.get('/about', (req, res) => {
     res.sendFile(path.join(publicPath, 'about.html'));
@@ -200,6 +234,7 @@ app.get('/contact', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
 });
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

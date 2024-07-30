@@ -114,7 +114,7 @@
         function populatePatientsTable(patients) {
             const patientsTableBody = document.getElementById('patientsTable').getElementsByTagName('tbody')[0];
             patientsTableBody.innerHTML = ''; // Clear any existing data
-
+        
             patients.forEach(patient => {
                 const row = patientsTableBody.insertRow();
                 row.insertCell(0).textContent = patient._id || 'N/A'; // Adjust based on your data structure
@@ -122,13 +122,14 @@
                 row.insertCell(2).textContent = patient.age || 'N/A';
                 row.insertCell(3).textContent = patient.gender || 'N/A';
                 row.insertCell(4).textContent = patient.aadhar || 'N/A';
-                row.insertCell(3).textContent = patient.blood_type || 'N/A';
-                row.insertCell(5).textContent = patient.email || 'N/A';
-                row.insertCell(6).textContent = patient.phone || 'N/A';
-                row.insertCell(7).textContent = patient.address || 'N/A';
+                row.insertCell(5).textContent = patient.blood_type || 'N/A'; // Adjust key names as needed
+                row.insertCell(6).textContent = patient.email || 'N/A';
+                row.insertCell(7).textContent = patient.phone || 'N/A';
+                row.insertCell(8).textContent = patient.address || 'N/A';
                 row.insertCell(9).textContent = patient.organ_needed || 'N/A';
             });
         }
+        
 
         window.onload = fetchPatientData;
     </script>
