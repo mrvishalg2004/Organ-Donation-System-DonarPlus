@@ -205,57 +205,41 @@ img.nav-logo{
   justify-content: center;
 }
 
-.search{
+/* General text color for search sections */
+.search {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 310px;
-  background: #ffffff;
+  background: #fff;
   padding: 20px;
   border-radius: 12px;
-  color: #fff;
+  color: #005f82 /* Default text color */
 }
 
-.search .details{
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  align-content: stretch;
-  justify-content: center;
-  flex-wrap: nowrap;
-  width: 225px;
-}
-
-#searchDonorCheck{
-  padding: 8px;
-  text-align: center;
-}
-
-#searchPatientCheck{
-  padding: 8px;
-  text-align: center;
-}
-
-.search h2{
+.search h2 {
   font-size: 1.5rem;
   font-weight: 600;
+  color: #005f82 /* Heading color */
 }
 
-.col-md-4.container-1{
-  display: flex;
-  align-items: flex-end;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+/* Specific text color for details sections */
+.details p {
+  color: #005f82 /* Text color for donor and patient details */
 }
 
-.col-md-4.container-2{
-  display: flex;
-  align-items: flex-start;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
+/* Individual styling for search status messages */
+#searchDonorCheck, #searchPatientCheck {
+  padding: 8px;
+  text-align: center;
+  color: #005f82; /* Specific color for search status messages */
 }
+
+/* Ensuring consistent color styling within container elements */
+.col-md-4.container-1, .col-md-4.container-2 {
+  color: #005f82 /* Consistent text color for both containers */
+}
+
 
 .left-content.width{
   display: block;
