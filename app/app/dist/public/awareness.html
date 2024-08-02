@@ -18,7 +18,7 @@
     <link rel="icon" href="images/organ-donation-logo-new.svg">
 
     <link rel="stylesheet" href="./css/bootstrap.css">
-    <link rel="stylesheet" href="./css/style-home.css">
+    <link rel="stylesheet" href="./css/awareness.css">
     <link rel="stylesheet" href="./css/fontawesome-all.css">
 
     <title>Awareness - DonarPlus</title>
@@ -26,7 +26,7 @@
    
 </head>
 <body>
-    <header>
+    <!-- <header>
         <div class="container">
             <div class="row">
                 <nav>
@@ -36,13 +36,37 @@
                         <li><a class="active" href="">Awareness</a></li>
                         <li><a href="about-us.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        
-                        <!-- <li><a href="donor-pledge.html">Pledge</a></li> -->
+            
+                    </ul>
+                </nav>
+
+                
+                
+            </div>
+        </div> 
+    </header> -->
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <nav>
+                    <a href="homepage.html"><img id="logo" src="../images/mainlogo.png" alt="DonarPlus"></a>
+                    <div id="hamburger" class="hamburger-icon">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <ul id="nav-links">
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a class="active" href="">Awareness</a></li>
+                        <li><a href="about-us.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
             </div> <!-- end of row -->
         </div> <!-- end of container -->
     </header>
+    
 
     <main>
         <div class="container">
@@ -191,6 +215,24 @@
                 });
             });
         });
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const hamburger = document.getElementById("hamburger");
+        const navLinks = document.getElementById("nav-links");
+
+        hamburger.addEventListener("click", function() {
+            navLinks.classList.toggle("active");
+            // Optional: Add animation to hamburger icon
+            hamburger.classList.toggle("open");
+        });
+    });
+
+      
+
+
+
+        
     </script>
 </body>
 </html>
