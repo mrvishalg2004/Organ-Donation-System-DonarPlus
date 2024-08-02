@@ -176,7 +176,6 @@ app.get('/api/donors', async (req, res) => {
 });
 
 // Search for a specific donor by aadhar number
-// Search for a specific donor by aadhar number
 app.post('/api/donor/search', async (req, res) => {
     try {
         const { aadhar } = req.body; // Get the aadhar number from the request body
