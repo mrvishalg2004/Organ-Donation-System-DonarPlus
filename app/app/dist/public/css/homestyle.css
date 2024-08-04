@@ -425,8 +425,6 @@ footer {
 
 
 
-
-
 /* General button styles */
 button.btn {
     font-weight: 600;
@@ -462,6 +460,7 @@ button.btn:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds shadow effect */
     transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+
 
 /* Card hover effect */
 .content-box:hover {
@@ -538,9 +537,6 @@ nav ul li {
         background-color: #94e1ff;
     }
 }
-
-
-
 
 #typing-effect::after {
     content: '|';
