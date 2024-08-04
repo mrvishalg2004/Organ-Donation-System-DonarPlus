@@ -1,10 +1,9 @@
-console.log("Hlwww")
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const path = require('path');
-require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
+require('dotenv').config({ path: path.join(__dirname, '..', '.env+') });
 
 const app = express();
 const port = process.env.PORT || 3005;
@@ -175,7 +174,6 @@ app.get('/api/donors', async (req, res) => {
     }
 });
 
-// Search for a specific donor by aadhar number
 // Search for a specific donor by aadhar number
 app.post('/api/donor/search', async (req, res) => {
     try {
