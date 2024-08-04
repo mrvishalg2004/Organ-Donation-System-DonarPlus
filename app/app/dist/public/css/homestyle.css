@@ -211,7 +211,7 @@ a.hover:hover {
     line-height: 1.6;
     font-size: 1em;
     font-weight: 600;
-    display: none;
+    display: none
 }
 
 .accordion_input {
