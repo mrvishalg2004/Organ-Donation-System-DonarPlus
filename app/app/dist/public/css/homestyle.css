@@ -307,8 +307,8 @@ footer {
         display: block;
         cursor: pointer;
         position: absolute;
-        top: 15px; /* Adjust top position to align icon properly */
-        right: 20px; /* Adjust right position to align icon properly */
+        top: 15px; 
+        right: 20px; 
     }
 
     #menu-toggle .bar {
@@ -316,7 +316,7 @@ footer {
         background-color: #fff;
         width: 25px;
         height: 3px;
-        margin: 5px 0;
+        margin: 5px 0; 
     }
 
     nav.active ul {
@@ -521,8 +521,8 @@ nav ul li {
         display: block;
         cursor: pointer;
         position: absolute;
-        top: 15px; /* Adjust as needed */
-        right: 20px; /* Adjust as needed */
+        top: 15px;
+        right: 20px;
     }
 
     #menu-toggle .bar {
