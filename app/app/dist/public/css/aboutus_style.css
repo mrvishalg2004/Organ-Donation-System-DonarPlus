@@ -15,28 +15,14 @@ a {
     color: #fff;
 }
 
-body {
-    font-family: montserrat;
-}
-
-#heading {
-    color: #4a4a4a;
-    text-align: center;
-    padding: 0px 0px 10px 0px;
-    font-weight: 700;
-    font-size: 3rem;
-}
-
 header {
     background-color: #94e1ff;
     height: 110px;
     border-radius: 59px;
     display: flex;
     align-items: center;
-}
-
-.row.center-box {
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
 
 nav {
@@ -46,6 +32,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 nav a#logo {
@@ -53,7 +40,7 @@ nav a#logo {
 }
 
 img#logo {
-    height: 130px; /* Increased from 70px */
+    height: 130px;
     width: auto;
 }
 
@@ -81,6 +68,19 @@ nav ul li a {
     border-radius: 4px;
 }
 
+a.active, a:hover {
+    color: #fff;
+    background: #005f82;
+    transition: .5s;
+    text-decoration: none;
+}
+
+a.hover:hover {
+    background: none;
+    color: #fff;
+}
+
+
 .hamburger {
     display: none;
     flex-direction: column;
@@ -94,7 +94,7 @@ nav ul li a {
     background: #333;
     margin: 4px;
     border-radius: 5px;
-}
+} 
 
 .content-box.profile {
     margin-bottom: 30px;
@@ -127,12 +127,6 @@ nav ul li a {
     overflow: hidden;
 }
 
-.infographic-box img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-}
-
 .infographic-title {
     font-size: 20px;
     font-weight: 700;
@@ -158,86 +152,117 @@ nav ul li a {
     margin-bottom: 10px;
 }
 
-.infographic-icon:nth-child(2) {
-    background-color: #ffba08;
+.infographic-box:nth-child(1) {
+    border-top: 5px solid #00b4d8;
 }
 
-.infographic-icon:nth-child(3) {
-    background-color: #ff006e;
+.infographic-box:nth-child(2) {
+    border-top: 5px solid #ffba08;
 }
 
-.infographic-icon:nth-child(4) {
-    background-color: #3a86ff;
+.infographic-box:nth-child(3) {
+    border-top: 5px solid #ff006e;
 }
 
-.infographic-box .v-shape {
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    background-color: #fff;
-    transform: translateX(-50%) rotate(45deg);
-    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.1);
+.infographic-box:nth-child(4) {
+    border-top: 5px solid #3a86ff;
 }
 
-footer {
-    background-color: #f1f1f1;
-    padding: 20px 0;
-    text-align: center;
-}
 
-.footer-logo img {
-    height: 50px;
-    margin-bottom: 10px;
-}
 
-#copyright {
-    font-size: 14px;
-    color: #666;
-}
 
-@media screen and (max-width: 768px) {
-    .hamburger {
-        display: flex;
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        padding: 10px 0;
+    }
+
+    nav a#logo {
+        margin: 0;
+        height: 50px;
+    }
+
+    img#logo {
+        height: 50px;
+        width: auto;
+        margin-top: 10px;
     }
 
     nav ul {
-        position: fixed;
-        right: 0;
-        height: 100vh;
-        top: 0;
-        background-color: #94e1ff;
+        display: none;
         flex-direction: column;
-        align-items: center;
-        width: 200px;
-        transform: translateX(100%);
-        transition: transform 0.5s ease-in;
-    }
-
-    nav ul.open {
-        transform: translateX(0%);
+        width: 100%;
     }
 
     nav ul li {
-        margin: 20px 0;
-        line-height: 20px;
+        display: block;
+        text-align: center;
+        width: 100%;
+        margin: 10px 0;
     }
 
     nav ul li a {
-        font-size: 20px;
+        padding: 10px 0;
+        font-size: 18px;
+        color: #005f82;
     }
 
-    .hamburger.toggle span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
+    #hamburger {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        top: 15px; /* Adjust top position to align icon properly */
+        right: 20px; /* Adjust right position to align icon properly */
     }
 
-    .hamburger.toggle span:nth-child(2) {
-        opacity: 0;
+    #hamburger .bar {
+        display: block;
+        background-color: #fff;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
     }
 
-    .hamburger.toggle span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
+    nav.active ul {
+        display: flex;
+        background-color: #94e1ff;
+        width: 100%;
+    }
+
+    .content-box {
+        height: auto;
+        padding: 20px;
+        margin: 10px 0;
+    }
+
+    .content-box img {
+        width: 80%;
+    }
+
+    .accordion_label,
+    .accordion_content {
+        padding: 10px;
+    }
+
+    footer {
+        padding: 20px;
+    }
+
+    .infographic-section {
+        flex-direction: column;
+    }
+
+    .infographic-box {
+        width: 100%;
+        max-width: 300px;
     }
 
     img#logo {
@@ -251,9 +276,72 @@ footer {
     .content-box.profile img {
         max-width: 150px;
     }
+}
 
-    .infographic-box {
+/* Desktop View */
+nav {
+    background-color: #94e1ff;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+nav ul {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Aligns the menu items to the left */
+    margin-right: 20px; /* Adjust as needed */
+}
+
+nav ul li {
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
         width: 100%;
-        max-width: 300px;
+        padding: 10px 0;
+    }
+
+    nav ul {
+        display: none; /* Hide menu by default */
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+    }
+
+    nav ul li {
+        display: block;
+        text-align: center;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    #hamburger {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+        top: 15px; /* Adjust as needed */
+        right: 20px; /* Adjust as needed */
+    }
+
+    #hamburger .bar {
+        display: block;
+        background-color: #fff;
+        width: 25px;
+        height: 3px;
+        margin: 5px 0;
+    }
+
+    nav.active ul {
+        display: flex;
+        background-color: #94e1ff;
     }
 }

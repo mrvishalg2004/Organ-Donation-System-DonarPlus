@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +15,6 @@
     <link rel="stylesheet" href="./css/style-home.css">
     <link rel="stylesheet" href="./css/fontawesome-all.css">
     <link rel="stylesheet" href="./css/aboutus_style.css">
-    <link rel="stylesheet" href="../main.js">
 
     <title>About Us - DonarPlus</title>
 </head>
@@ -26,17 +24,17 @@
         <div class="container">
             <div class="row">
                 <nav>
-                    <a href="homepage.html"><img id="logo" src="../images/mainlogo.png" alt="DonarPlus"></a>
-                    <ul class="nav-links">
+                    <a href="homepage.html"><img id="logo" src="./images/mainlogo.png" alt="DonarPlus"></a>
+                    <ul>
                         <li><a href="homepage.html">Home</a></li>
                         <li><a href="awareness.html">Awareness</a></li>
                         <li><a class="active" href="">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
-                    <div class="hamburger">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                    <div id="hamburger">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
                     </div>
                 </nav>
             </div>
@@ -57,29 +55,29 @@
                     <div class="content-box profile text-center">
                         <img src="./images/vishal.png" alt="Vishal Golhar">
                         <h3>Vishal Golhar</h3>
-                        <p>G.H. Raisoni College Of Engineering Nagpur <br> Artificial Intelligence <br><br><span>🧑‍💻 Frontend & Backend Developer</span></p> 
+                        <p>G.H. Raisoni College Of Engineering Nagpur <br> Artificial Intelligence <br><br><span>🧑‍💻 Frontend & Backend Developer</span></p>
                     </div>
                 </div>
             </div>
 
             <div class="infographic-section">
                 <div class="infographic-box">
-                    <div class="infographic-icon">🗻</div>
+                    <div class="infographic-icon mission">🗻</div>
                     <div class="infographic-title">Mission</div>
                     <div class="infographic-desc">To revolutionize organ donation by utilizing blockchain technology to ensure transparency, security, and accessibility for all.</div>
                 </div>
                 <div class="infographic-box">
-                    <div class="infographic-icon">👁️</div>
+                    <div class="infographic-icon vision">👁️</div>
                     <div class="infographic-title">Vision</div>
                     <div class="infographic-desc">To create a world where every individual has an equal opportunity to receive the organ they need, powered by a transparent and efficient blockchain system.</div>
                 </div>
                 <div class="infographic-box">
-                    <div class="infographic-icon">💎</div>
+                    <div class="infographic-icon value">💎</div>
                     <div class="infographic-title">Value</div>
                     <div class="infographic-desc">We value integrity, transparency, and commitment to saving lives through innovative technology.</div>
                 </div>
                 <div class="infographic-box">
-                    <div class="infographic-icon">🎯</div>
+                    <div class="infographic-icon goals">🎯</div>
                     <div class="infographic-title">Goals</div>
                     <div class="infographic-desc">To streamline the organ donation process and create a secure, reliable platform for donors and recipients.</div>
                 </div>
@@ -91,7 +89,7 @@
         <div class="container">
             <div class="row center-box">
                 <div class="col-12">
-                    <div class="footer-logo"><img src="../images/mainlogo.png" alt="DonarPlus Logo"></div>
+                    <div class="footer-logo"><img src="./images/mainlogo.png" alt="DonarPlus Logo"></div>
                     <div id="copyright">
                         <p>Copyright © 2024 DonarPlus - All rights reserved</p>
                     </div>
@@ -100,15 +98,30 @@
         </div>
     </footer>
 
+    <script src="../public/js/main.js"></script>
     <script>
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('open');
-            hamburger.classList.toggle('toggle');
+           // document.addEventListener('DOMContentLoaded', () => {
+                //const hamburger = document.getElementById('hamburger');
+                //const navLinks = document.querySelector('nav');
+               // hamburger.addEventListener('click', () => {
+               //     nav.classList.toggle('active');
+               // });
+                
+                //if (hamburger && navLinks) {
+                //    hamburger.addEventListener('click', () => {
+               //         navLinks.classList.toggle('open');
+               //         hamburger.classList.toggle('toggle');
+              //      });
+              //  }
+          //  });
+        const menuToggle = document.getElementById('hamburger');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
         });
+
+        
     </script>
 </body>
-
 </html>
