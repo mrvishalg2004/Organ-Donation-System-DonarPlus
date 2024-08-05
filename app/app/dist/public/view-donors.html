@@ -6,34 +6,20 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
+    <link href="css/view-donors.css" rel="stylesheet">
     <link href="../css/bootstrap.css" rel="stylesheet">
     <link href="../css/fontawesome-all.css" rel="stylesheet">
     <link rel="icon" href="../images/organ-donation-logo-new.svg">
     <title>Donors Database</title>
-    <style>
-        .spinner { display: flex; justify-content: center; align-items: center; height: 100px; }
-        .bounce1, .bounce2, .bounce3 { width: 15px; height: 15px; background-color: #333; border-radius: 50%; display: inline-block; animation: bounce 1.4s infinite ease-in-out; }
-        .bounce2 { animation-delay: -0.32s; }
-        .bounce3 { animation-delay: -0.16s; }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
-        table { width: 100%; margin-bottom: 1rem; color: #212529; }
-        th, td { padding: 0.75rem; vertical-align: top; border-top: 1px solid #dee2e6; }
-        thead th { vertical-align: bottom; color:black;}
-        tbody + tbody { border-top: 2px solid #dee2e6; }
-        .error-message { color: red; text-align: center; }
-        .hidden { display: none; }
-    </style>
 </head>
 <body>
-
     <!-- start of navigation -->
     <header>
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav>
-                        <a href="index.html"><img class="nav-logo" src="../images/logo bg.png" alt="DonarPlus"></a>
+                        <a href="index.html"><img class="nav-logo" src="./images/mainlogo.png" alt="DonarPlus"></a>
                     </nav>
                 </div>
             </div>
@@ -141,6 +127,5 @@
         
         window.onload = fetchDonorData;
     </script>
-    
 </body>
 </html>

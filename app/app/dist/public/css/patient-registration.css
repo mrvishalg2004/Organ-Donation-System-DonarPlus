@@ -676,24 +676,7 @@ Table Of Contents:
   }
   
   
-  .hidden { display: none; }
-  .form-group { margin-bottom: 15px; }
-  .form-bg { padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(24, 51, 255, 0.1); }
-  .btn-center { display: flex; justify-content: center; margin-top: 20px; }
-  .btn-primary { padding: 10px 20px; margin: 0 10px; }
-  .btn-back { margin-right: 10px; }
-  .alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
-  .alert-success { background-color: #d4edda; color: #155724; }
-  .alert-error { background-color: #f8d7da; color: #721c24; }
-  .is-invalid { border-color: #dc3545; }  
-
-
-
-
-
-
-
-/* Adjust spacing for mobile and tablet views */
+  /* Adjust spacing for mobile and tablet views */
 @media (max-width: 768px) {
     .col-md-4.form-bg {
       padding-left: 10px;
@@ -705,4 +688,5 @@ Table Of Contents:
       padding-right: 10px;
     }
   }
+  
   

@@ -1,5 +1,5 @@
 /* Template: Organ Donation Prototype
-   Created: June 2024
+   Created: January 2022
    Description: Master CSS file
 */
 
@@ -37,65 +37,10 @@ Table Of Contents:
     /* background-color: #94e1ff; */
   }
   
-  /* body{
+  body{
     background: #ffffff !important;
     font-family: "Montserrat", sans-serif !important;
-  } */
-  /* index.html file background image code */
-  
-  body {
-    position: relative;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: "Montserrat", sans-serif !important;
   }
-  
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../images/index7.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(10px); /* Adjust the blur intensity as needed */
-    z-index: -1; /* Ensure the pseudo-element is behind the content */
-  }
-  
-  /* Ensure content appears above the blurred background */
-  main {
-    position: relative;
-    z-index: 1;
-  }
-  body {
-    position: relative;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: "Montserrat", sans-serif !important;
-  }
-  
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../images/reg.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(3px); /* Adjust the blur intensity as needed */
-    z-index: -1; /* Ensure the pseudo-element is behind the content */
-  }
-  
-  /* Ensure content appears above the blurred background */
-  main {
-    position: relative;
-    z-index: 1;
-  }
-  
   
   main{
     margin-bottom: 1rem;
@@ -205,41 +150,57 @@ Table Of Contents:
     justify-content: center;
   }
   
-  /* General text color for search sections */
-  .search {
+  .search{
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 310px;
-    background: #fff;
+    background: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    color: #005f82 /* Default text color */
+    color: #fff;
   }
   
-  .search h2 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #005f82 /* Heading color */
+  .search .details{
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: center;
+    flex-wrap: nowrap;
+    width: 225px;
   }
   
-  /* Specific text color for details sections */
-  .details p {
-    color: #005f82 /* Text color for donor and patient details */
-  }
-  
-  /* Individual styling for search status messages */
-  #searchDonorCheck, #searchPatientCheck {
+  #searchDonorCheck{
     padding: 8px;
     text-align: center;
-    color: #005f82; /* Specific color for search status messages */
   }
   
-  /* Ensuring consistent color styling within container elements */
-  .col-md-4.container-1, .col-md-4.container-2 {
-    color: #005f82 /* Consistent text color for both containers */
+  #searchPatientCheck{
+    padding: 8px;
+    text-align: center;
   }
   
+  .search h2{
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .col-md-4.container-1{
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
+  
+  .col-md-4.container-2{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+  }
   
   .left-content.width{
     display: block;
@@ -620,89 +581,163 @@ Table Of Contents:
   }
   
   
-  
-  /* code */
-  body {
-    position: relative;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: "Montserrat", sans-serif !important;
-  }
-  
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../images/index6.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(10px); /* Adjust the blur intensity as needed */
-    z-index: -1; /* Ensure the pseudo-element is behind the content */
-  }
-  
-  /* Ensure content appears above the blurred background */
-  main {
-    position: relative;
-    z-index: 1;
-  }
-  body {
-    position: relative;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    font-family: "Montserrat", sans-serif !important;
-  }
-  
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('../images/index7.jpg') no-repeat center center fixed;
-    background-size: cover;
-    filter: blur(3px); /* Adjust the blur intensity as needed */
-    z-index: -1; /* Ensure the pseudo-element is behind the content */
-  }
-  
-  /* Ensure content appears above the blurred background */
-  main {
-    position: relative;
-    z-index: 1;
-  }
-  
-  
+  .spinner { display: flex; justify-content: center; align-items: center; height: 100px; }
+  .bounce1, .bounce2, .bounce3 { width: 15px; height: 15px; background-color: #333; border-radius: 50%; display: inline-block; animation: bounce 1.4s infinite ease-in-out; }
+  .bounce2 { animation-delay: -0.32s; }
+  .bounce3 { animation-delay: -0.16s; }
+  @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-15px); } }
+  table { width: 100%; margin-bottom: 1rem; color: #212529; }
+  th, td { padding: 0.75rem; vertical-align: top; border-top: 1px solid #dee2e6; }
+  thead th { vertical-align: bottom; color:black;}
+  tbody + tbody { border-top: 2px solid #dee2e6; }
+  .error-message { color: red; text-align: center; }
   .hidden { display: none; }
-  .form-group { margin-bottom: 15px; }
-  .form-bg { padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(24, 51, 255, 0.1); }
-  .btn-center { display: flex; justify-content: center; margin-top: 20px; }
-  .btn-primary { padding: 10px 20px; margin: 0 10px; }
-  .btn-back { margin-right: 10px; }
-  .alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
-  .alert-success { background-color: #d4edda; color: #155724; }
-  .alert-error { background-color: #f8d7da; color: #721c24; }
-  .is-invalid { border-color: #dc3545; }  
 
+  
 
+/* General Styles */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: "Montserrat", sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 
+/* Header */
+header {
+    background-color: #ffffff;
+    padding: 20px 0;
+    border-bottom: 1px solid #e1e1e1;
+}
 
-/* Adjust spacing for mobile and tablet views */
+.nav-logo {
+    height: 70px;
+}
+
+/* Main Content */
+main {
+    padding: 20px 0;
+}
+
+h3 {
+    text-align: center;
+    color: #005f82;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.table-responsive {
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #005f82;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #e1e1e1;
+}
+
+/* Spinner and Error Message */
+.spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.spinner > div {
+    width: 15px;
+    height: 15px;
+    background-color: #0079a8;
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .col-md-4.form-bg {
-      padding-left: 10px;
-      padding-right: 10px;
+    .nav-logo {
+        height: 50px;
+    }
+
+    table {
+        font-size: 14px;
     }
     
-    .container, .row {
-      padding-left: 10px;
-      padding-right: 10px;
+    .spinner > div {
+        width: 10px;
+        height: 10px;
     }
-  }
-  
+}
+
+@media (max-width: 576px) {
+    .nav-logo {
+        height: 40px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    .spinner > div {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* Utility Classes */
+.hidden {
+    display: none;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}

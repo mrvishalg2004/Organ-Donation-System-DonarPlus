@@ -72,7 +72,7 @@
                 </div>
             </div>
             <br>
-            <div class="row center-box">
+            <div class="row center-box search-section">
                 <div class="col-md-4 container-1 glass-effect">
                     <div class="search">
                         <h2>Search Donor</h2>
@@ -115,76 +115,72 @@
     </footer>
     <script>
         // Function to search for a donor
-        // Function to search for a donor
-// Function to search for a donor
-function searchDonor() {
-    const aadhar = document.getElementById('inputDonorMedicalID').value;
-    fetch('/api/donor/search', { // Updated the URL to match the new route
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ aadhar })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        function searchDonor() {
+            const aadhar = document.getElementById('inputDonorMedicalID').value;
+            fetch('/api/donor/search', { // Updated the URL to match the new route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ aadhar })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('searchDonorCheck').textContent = data.error;
+                } else {
+                    document.getElementById('getDonorFullName').textContent = 'Full Name: ' + data.fullname; // Ensure data.fullname matches your schema
+                    document.getElementById('getDonorAge').textContent = 'Age: ' + data.age;
+                    document.getElementById('getDonorGender').textContent = 'Gender: ' + data.gender;
+                    document.getElementById('getDonorBloodType').textContent = 'Blood Type: ' + data.blood_type;
+                    document.getElementById('getDonorOrgan').textContent = 'Organ: ' + data.organ_to_donate;
+                    document.getElementById('searchDonorCheck').textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error searching donor:', error);
+                document.getElementById('searchDonorCheck').textContent = 'Error searching donor. Please try again.';
+            });
         }
-        return response.json();
-    })
-    .then(data => {
-        if (data.error) {
-            document.getElementById('searchDonorCheck').textContent = data.error;
-        } else {
-            document.getElementById('getDonorFullName').textContent = 'Full Name: ' + data.fullname; // Ensure data.fullname matches your schema
-            document.getElementById('getDonorAge').textContent = 'Age: ' + data.age;
-            document.getElementById('getDonorGender').textContent = 'Gender: ' + data.gender;
-            document.getElementById('getDonorBloodType').textContent = 'Blood Type: ' + data.blood_type;
-            document.getElementById('getDonorOrgan').textContent = 'Organ: ' + data.organ_to_donate;
-            document.getElementById('searchDonorCheck').textContent = '';
-        }
-    })
-    .catch(error => {
-        console.error('Error searching donor:', error);
-        document.getElementById('searchDonorCheck').textContent = 'Error searching donor. Please try again.';
-    });
-}
 
-
-// Function to search for a patient
-function searchPatient() {
-    const aadhar = document.getElementById('inputPatientMedicalID').value; // Ensure this ID matches your input field's ID
-    fetch('/api/patient/search', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ aadhar })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        // Function to search for a patient
+        function searchPatient() {
+            const aadhar = document.getElementById('inputPatientMedicalID').value; // Ensure this ID matches your input field's ID
+            fetch('/api/patient/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ aadhar })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('searchPatientCheck').textContent = data.error;
+                } else {
+                    document.getElementById('getPatientFullName').textContent = 'Full Name: ' + data.fullName;
+                    document.getElementById('getPatientAge').textContent = 'Age: ' + data.age;
+                    document.getElementById('getPatientGender').textContent = 'Gender: ' + data.gender;
+                    document.getElementById('getPatientBloodType').textContent = 'Blood Type: ' + data.blood_type;
+                    document.getElementById('getPatientOrgan').textContent = 'Organ Needed: ' + data.organ_needed;
+                    document.getElementById('searchPatientCheck').textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error searching patient:', error);
+                document.getElementById('searchPatientCheck').textContent = 'Error searching patient. Please try again.';
+            });
         }
-        return response.json();
-    })
-    .then(data => {
-        if (data.error) {
-            document.getElementById('searchPatientCheck').textContent = data.error;
-        } else {
-            document.getElementById('getPatientFullName').textContent = 'Full Name: ' + data.fullName;
-            document.getElementById('getPatientAge').textContent = 'Age: ' + data.age;
-            document.getElementById('getPatientGender').textContent = 'Gender: ' + data.gender;
-            document.getElementById('getPatientBloodType').textContent = 'Blood Type: ' + data.blood_type;
-            document.getElementById('getPatientOrgan').textContent = 'Organ Needed: ' + data.organ_needed;
-            document.getElementById('searchPatientCheck').textContent = '';
-        }
-    })
-    .catch(error => {
-        console.error('Error searching patient:', error);
-        document.getElementById('searchPatientCheck').textContent = 'Error searching patient. Please try again.';
-    });
-}
-
     </script>
 </body>
 </html>
