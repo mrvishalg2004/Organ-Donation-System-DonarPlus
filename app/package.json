@@ -24,6 +24,7 @@
   "dependencies": {
     "assert": "^2.1.0",
     "async_hooks": "^1.0.0",
+    "bcrypt": "^5.1.1",
     "bl": "^4.0.3",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
@@ -46,4 +47,3 @@
     "url": "^0.11.3"
   }
 }
-

@@ -591,6 +591,23 @@ Table Of Contents:
       -webkit-animation-delay: -0.16s;
       animation-delay: -0.16s;
   }
+
+  .password-wrapper {
+    position: relative;
+}
+
+.password-wrapper .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #333;
+}
+
+.password-wrapper .toggle-password:hover {
+    color: #000;
+}
   
   @-webkit-keyframes sk-bouncedelay {
       0%, 80%, 100% { -webkit-transform: scale(0); }

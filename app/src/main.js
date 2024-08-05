@@ -121,6 +121,7 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
     });
 
     try {
+        console.log('Donor data:', donorData);
         const hashedPassword = await bcrypt.hash(donorData.password, 10);
         donorData.password = hashedPassword;
 
@@ -130,7 +131,7 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
         res.status(200).json({ message: 'Donor registered successfully', success: true });
     } catch (err) {
         console.error('Error inserting donor:', err);
-        res.status(500).json({ message: 'Internal server error', error: err.message, success: false });
+        res.status(500).json({ message: 'Internal server error', success: false });
     }
 });
 
@@ -163,8 +164,15 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
     });
 
     try {
-        const hashedPassword = await bcrypt.hash(patientData.password, 10);
-        patientData.password = hashedPassword;
+        console.log('Patient data:', patientData);
+
+        // Ensure the password is not undefined before hashing
+        if (patientData.password) {
+            const hashedPassword = await bcrypt.hash(patientData.password, 10);
+            patientData.password = hashedPassword;
+        } else {
+            throw new Error('Password is required');
+        }
 
         const newPatient = new Patient(patientData);
         await newPatient.save();
@@ -252,7 +260,7 @@ app.post('/api/patient/search', async (req, res) => {
         res.json(patient);
     } catch (err) {
         console.error('Error searching patient:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status (500).json({ error: 'Internal server error' });
     }
 });
 
