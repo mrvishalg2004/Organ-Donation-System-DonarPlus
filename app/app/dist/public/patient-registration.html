@@ -76,6 +76,15 @@
                             <label for="PatientEmail">Email Address:</label>
                             <input type="email" id="PatientEmail" name="email" class="form-control" placeholder="Email Address" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="PatientPassword">Password:</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="PatientPassword" name="password" class="form-control" placeholder="Password" required>
+                                <i class="fa fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="PatientAddress">Home Address:</label>
                             <input type="text" id="PatientAddress" name="address" class="form-control" placeholder="Home Address" required>
@@ -216,6 +225,22 @@
     </div>
 </main>
 <script>
+    // Function to toggle password visibility
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("PatientPassword");
+        var toggleIcon = document.querySelector(".toggle-password");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        }
+    }
+
     function showStep(step) {
         document.querySelectorAll('[id^="step"]').forEach(function (element) {
             element.classList.add('hidden');
