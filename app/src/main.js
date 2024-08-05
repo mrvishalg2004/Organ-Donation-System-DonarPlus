@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const path = require('path');
+const bcrypt = require('bcrypt');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env+') });
 
 const app = express();
@@ -40,7 +41,11 @@ const donorSchema = new mongoose.Schema({
     any_condition: String,
     next_of_kin: String,
     kin_contact: String,
-    legal_authorization: String
+    legal_authorization: String,
+    password: {
+        type: String,
+        required: true
+    }
 });
 
 const patientSchema = new mongoose.Schema({
@@ -60,10 +65,14 @@ const patientSchema = new mongoose.Schema({
     alcohol_consumption: String,
     drug_use: String,
     diet_exercise: String,
-    organ_needed: String,  // Ensure this field is defined in the schema
+    organ_needed: String,
     reason: String,
     consent: String,
-    legal_information: String
+    legal_information: String,
+    password: {
+        type: String,
+        required: true
+    }
 });
 
 const Donor = mongoose.model('Donor', donorSchema);
@@ -107,10 +116,14 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
         any_condition: req.body.any_condition,
         next_of_kin: req.body.next_of_kin,
         kin_contact: req.body.kin_contact,
-        legal_authorization: req.body.legal_authorization
+        legal_authorization: req.body.legal_authorization,
+        password: req.body.password // Ensure password is included
     });
 
     try {
+        const hashedPassword = await bcrypt.hash(donorData.password, 10);
+        donorData.password = hashedPassword;
+
         const newDonor = new Donor(donorData);
         await newDonor.save();
         console.log('Donor registered successfully');
@@ -142,13 +155,17 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
         alcohol_consumption: req.body.alcohol_consumption,
         drug_use: req.body.drug_use,
         diet_exercise: req.body.diet_exercise,
-        organ_needed: req.body.organ_needed,  // Ensure this field is being processed
+        organ_needed: req.body.organ_needed,
         reason: req.body.reason,
         consent: req.body.consent,
-        legal_information: req.body.legal_information
+        legal_information: req.body.legal_information,
+        password: req.body.password // Ensure password is included
     });
 
     try {
+        const hashedPassword = await bcrypt.hash(patientData.password, 10);
+        patientData.password = hashedPassword;
+
         const newPatient = new Patient(patientData);
         await newPatient.save();
         console.log('Patient registered successfully');
@@ -159,6 +176,27 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
     }
 });
 
+// Login route
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+    
+    try {
+        const user = await Donor.findOne({ email }) || await Patient.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ error: 'Invalid credentials' });
+        }
+    } catch (err) {
+        console.error('Error during login:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
 
 // Get all donors
 app.get('/api/donors', async (req, res) => {
@@ -189,7 +227,6 @@ app.post('/api/donor/search', async (req, res) => {
     }
 });
 
-
 // Get all patients
 app.get('/api/patients', async (req, res) => {
     try {
@@ -219,7 +256,6 @@ app.post('/api/patient/search', async (req, res) => {
     }
 });
 
-
 // Additional routes for other HTML files
 app.get('/about', (req, res) => {
     res.sendFile(path.join(publicPath, 'about.html'));
@@ -232,7 +268,6 @@ app.get('/contact', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
 });
-
 
 // Error handling middleware
 app.use((err, req, res, next) => {

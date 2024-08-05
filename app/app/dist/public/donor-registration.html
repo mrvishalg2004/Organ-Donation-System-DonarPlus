@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="css/donor-registration.css" rel="stylesheet">
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/fontawesome-all.css" rel="stylesheet">
@@ -68,6 +69,15 @@
                             <label for="DonorEmail">Email Address:</label>
                             <input type="email" id="DonorEmail" name="email" class="form-control" placeholder="Email Address" required>
                         </div>
+                        <!-- Password input  -->
+                        <div class="form-group">
+                            <label for="DonorPassword">Password:</label>
+                            <div class="password-wrapper">
+                                <input type="password" id="DonorPassword" name="password" class="form-control" placeholder="Password" required>
+                                <i class="fa fa-eye password-toggle" id="passwordToggle"></i>
+                            </div>
+                        </div>                        
+                        <!-- Password input end -->
                         <div class="form-group">
                             <label for="DonorAddress">Home Address:</label>
                             <input type="text" id="DonorAddress" name="address" class="form-control" placeholder="Home Address" required>
@@ -76,6 +86,7 @@
                             <button type="button" class="btn btn-primary register" onclick="validateStep(1)">Next</button>
                         </div>
                     </div>
+
 
                     <!-- Step 2: Medical History Information -->
                     <div id="step2" class="hidden">
@@ -230,13 +241,13 @@
 
     function showStep(step) {
         for (let i = 1; i <= 5; i++) {
-            document.getElementById(`step${i}`).classList.add('hidden');
+            document.getElementById('step' + i).classList.add('hidden');
         }
-        document.getElementById(`step${step}`).classList.remove('hidden');
+        document.getElementById('step' + step).classList.remove('hidden');
     }
 
     function validateStep(step) {
-        const currentStep = document.getElementById(`step${step}`);
+        const currentStep = document.getElementById('step' + step);
         const inputs = currentStep.querySelectorAll('input, select, textarea');
         let isValid = true;
 
@@ -289,6 +300,24 @@
             messageDiv.classList.add('alert-error');
         });
     });
+
+
+    // Password feild code
+    document.getElementById('passwordToggle').addEventListener('click', function() {
+    const passwordInput = document.getElementById('DonorPassword');
+    const icon = this;
+
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
+
 </script>
 </body>
 </html>
