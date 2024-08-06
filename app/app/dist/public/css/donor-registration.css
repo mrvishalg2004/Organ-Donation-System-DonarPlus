@@ -721,3 +721,7 @@ Table Of Contents:
 }
   /* Password feild code end */
 
+
+/*OTP code */
+  .hidden { display: none; }
+  .btn-center { text-align: center; }
