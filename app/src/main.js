@@ -1,6 +1,5 @@
 
 
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -8,9 +7,98 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env+') });
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const app = express();
 const port = process.env.PORT || 3005;
+
+//otp start
+
+// In-memory storage for OTPs
+const otpStorage = {}; 
+
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    },
+    secure: true // Use TLS
+});
+
+
+// Route to send OTP
+
+// Example of a correct fetch request handling
+document.getElementById('send-otp-btn').addEventListener('click', () => {
+    const email = document.getElementById('email-input').value; // Ensure 'email' is defined
+
+    fetch('/api/otp/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('OTP sent successfully');
+        } else {
+            alert('Failed to send OTP');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+
+app.post('/api/otp/send', (req, res) => {
+    console.log('Request Body:', req.body); // Log the request body to debug
+
+    // Check if req.body is defined
+    if (!req.body || !req.body.email) {
+        return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+
+    const { email } = req.body;
+    const otp = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit OTP
+    otpStorage[email] = otp; // Store OTP
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: email,
+        subject: 'Your OTP Code',
+        text: `Your OTP code is ${otp}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error('Error sending OTP:', error);
+            return res.status(500).json({ success: false, message: 'Failed to send OTP', error: error.message });
+        }
+        console.log('OTP sent:', info.response);
+        res.json({ success: true, message: 'OTP sent' });
+    });
+});
+
+
+
+// Route to verify OTP
+app.post('/api/otp/verify', (req, res) => {
+    const { email, otp } = req.body;
+
+    if (otpStorage[email] === otp) {
+        delete otpStorage[email]; // OTP used, remove from storage
+        res.json({ success: true, message: 'OTP verified' });
+    } else {
+        res.json({ success: false, message: 'Invalid OTP' });
+    }
+});
+
+// Start the server
+
+//otp end
 
 // MongoDB Atlas connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -290,3 +378,4 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/homepage.html`);
 });
+

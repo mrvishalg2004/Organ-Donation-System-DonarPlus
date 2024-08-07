@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -196,7 +196,26 @@
                         </div>
                     </div>
 
-                    <!-- Step 5: Consent and Legal Information -->
+                        <!-- OTP Verification Section -->
+                    <div id="otp-verification" class="hidden">
+                        <h2>Verify Your Email</h2>
+                        <div class="form-group">
+                            <label for="email">Enter Your Email:</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary" id="sendOtpBtn">Send OTP</button>
+                        </div>
+                        <div class="form-group hidden" id="otp-section">
+                            <label for="otp">Enter OTP:</label>
+                            <input type="text" id="otp" name="otp" class="form-control" placeholder="Enter OTP" required>
+                            <button type="button" class="btn btn-primary" id="verifyOtpBtn">Verify OTP</button>
+                        </div>
+                        <div id="otpMessage" class="hidden"></div>
+                    </div>
+
+
+                    <!-- Step 6: Consent and Legal Information -->
                     <div id="step5" class="hidden">
                         <h2>Consent and Legal Information 👨‍⚖️</h2>
                         <div class="form-group">
@@ -228,6 +247,7 @@
                             <button type="submit" class="btn btn-primary register">Submit</button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -238,12 +258,18 @@
 <script>
     const donorRegistrationForm = document.getElementById('donorRegistrationForm');
     const messageDiv = document.getElementById('message');
+    const otpMessage = document.getElementById('otpMessage'); // Ensure this element exists
 
     function showStep(step) {
         for (let i = 1; i <= 5; i++) {
             document.getElementById('step' + i).classList.add('hidden');
         }
-        document.getElementById('step' + step).classList.remove('hidden');
+        if (step === 5) {
+            document.getElementById('otp-verification').classList.remove('hidden');
+        } else {
+            document.getElementById('otp-verification').classList.add('hidden');
+            document.getElementById('step' + step).classList.remove('hidden');
+        }
     }
 
     function validateStep(step) {
@@ -261,7 +287,11 @@
         });
 
         if (isValid) {
-            showStep(step + 1);
+            if (step === 4) {
+                showStep(5); // Show OTP Verification step after Step 4
+            } else {
+                showStep(step + 1);
+            }
         }
     }
 
@@ -301,26 +331,83 @@
         });
     });
 
-
-    // Password feild code
+    // Password field code
     document.getElementById('passwordToggle').addEventListener('click', function() {
-    const passwordInput = document.getElementById('DonorPassword');
-    const icon = this;
+        const passwordInput = document.getElementById('DonorPassword');
+        const icon = this;
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // Handle OTP send button click
+    document.getElementById('sendOtpBtn').addEventListener('click', function () {
+    const email = document.getElementById('email').value;
+    if (email) {
+        console.log('Sending OTP to:', email); // Debugging line
+        fetch('/api/otp/send', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                otpMessage.textContent = 'OTP sent to your email.';
+                otpMessage.classList.remove('hidden', 'alert-error');
+                otpMessage.classList.add('alert-success');
+                document.getElementById('otp-section').classList.remove('hidden');
+            } else {
+                otpMessage.textContent = 'Failed to send OTP.';
+                otpMessage.classList.remove('hidden', 'alert-success');
+                otpMessage.classList.add('alert-error');
+            }
+        })
+        .catch(error => {
+            otpMessage.textContent = 'An error occurred. Please try again.';
+            otpMessage.classList.remove('hidden', 'alert-success');
+            otpMessage.classList.add('alert-error');
+        });
     }
 });
 
+    // Handle OTP verify button click
+    document.getElementById('verifyOtpBtn').addEventListener('click', function () {
+        const email = document.getElementById('email').value;
+        const otp = document.getElementById('otp').value;
+
+        fetch('/api/otp/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, otp })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                otpMessage.textContent = 'OTP verified successfully.';
+                otpMessage.classList.remove('hidden', 'alert-error');
+                otpMessage.classList.add('alert-success');
+                showStep(6); // Proceed to next step after successful OTP verification
+            } else {
+                otpMessage.textContent = 'Invalid OTP. Please try again.';
+                otpMessage.classList.remove('hidden', 'alert-success');
+                otpMessage.classList.add('alert-error');
+            }
+        })
+        .catch(error => {
+            otpMessage.textContent = 'An error occurred. Please try again.';
+            otpMessage.classList.remove('hidden', 'alert-success');
+            otpMessage.classList.add('alert-error');
+        });
+    });
 </script>
+<script src="app/otp-client.js"></script>
 </body>
 </html>
-
-
-I am provide you my html and main.js code in this code add the one functionality which is instate of the "Submit" button add the "Verify Account" button when user click on this button then one thing is open in this thing you add the "Enter the OTP" feild one "Send Otp" button and one "Submit Data" button but this button is disable unit next this is not present which is when user click on the Send OTP button the six digit code must be send on this provideed email address which he provided at the Step 1 use this email and send the verification code to his email after when user enter his recived code on the feild the you should match it if the otp is mathch then the hit Success massage and enable the submit data button if the otp is not match then hit the error massage, make sure that you use simple technoloy for this otp technolgy for your knowledge i am provide you my code which you help for better understand that what is present in my code and what you implement in this code so take your time but i need perfect result 
