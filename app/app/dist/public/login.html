@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Inline CSS for simplicity */
         body {
-            font-family: 'Montserrat', sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -16,107 +14,102 @@
             margin: 0;
             background-color: #f4f4f4;
         }
+
         .login-container {
-            width: 100%;
-            max-width: 400px;
             background: #fff;
-            padding: 20px;
+            padding: 2rem;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .login-container h2 {
-            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
             text-align: center;
         }
-        .form-group {
-            margin-bottom: 15px;
+
+        h1 {
+            margin-bottom: 1rem;
         }
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
+
+        form {
+            display: flex;
+            flex-direction: column;
         }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        input {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
+
+        button {
+            padding: 0.75rem;
             background-color: #007bff;
-            color: #fff;
             border: none;
             border-radius: 4px;
+            color: #fff;
             cursor: pointer;
         }
-        .btn:hover {
+
+        button:hover {
             background-color: #0056b3;
         }
-        .alert {
-            padding: 10px;
-            margin-bottom: 15px;
-            border-radius: 4px;
-            display: none;
-        }
-        .alert.error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .alert.success {
-            background-color: #d4edda;
-            color: #155724;
+
+        #message {
+            margin-top: 1rem;
         }
     </style>
 </head>
 <body>
-    <main>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <h2>Login</h2>
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="login()">Login</button>
-                        <p id="loginMessage"></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </main>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form onsubmit="login(event)">
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
     <script>
-        function login() {
+        async function login(event) {
+            event.preventDefault(); // Prevent the default form submission
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('loginMessage').textContent = 'Login successful!';
-                    // Redirect or handle success
-                } else {
-                    document.getElementById('loginMessage').textContent = data.error;
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-            })
-            .catch(error => {
-                console.error('Error during login:', error);
-                document.getElementById('loginMessage').textContent = 'An error occurred. Please try again.';
-            });
+
+                const data = await response.json();
+
+                if (data.message === 'Successfully logged in') {
+                    alert('Successfully logged in');
+                    window.location.href = 'https://www.google.com';
+                } else {
+                    alert(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error('An error occurred:', error);
+                alert(`An error occurred: ${error.message}`);
+            }
         }
     </script>
 </body>
