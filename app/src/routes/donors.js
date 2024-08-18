@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Donor = require('../models/donor');
+
 // Define the schema for the donor
 const donorSchema = new mongoose.Schema({
     fullname: String,
@@ -52,13 +56,37 @@ router.post('/register', async (req, res) => {
         any_condition,
         next_of_kin,
         kin_contact,
-        legal_authorization
+        legal_authorization,
+        password
     } = req.body;
+    // const {
+    //     fullname,
+    //     age,
+    //     gender,
+    //     aadhar,
+    //     phone,
+    //     email,
+    //     address,
+    //     blood_type,
+    //     medical_history,
+    //     infection_diseases,
+    //     surgical_history,
+    //     allergies,
+    //     smoking_status,
+    //     alcohol_consumption,
+    //     drug_use,
+    //     diet_exercise,
+    //     organ_to_donate,
+    //     any_condition,
+    //     next_of_kin,
+    //     kin_contact,
+    //     legal_authorization
+    // } = req.body;
 
-    // Validate required fields
-    if (!fullname || !age || !gender || !aadhar || !phone || !email || !address) {
-        return res.status(400).json({ success: false, message: 'Required fields are missing' });
-    }
+// Validate required fields
+if (!fullname || !age || !gender || !aadhar || !phone || !email || !address || !password) {
+    return res.status(400).json({ success: false, message: 'Required fields are missing' });
+}
 
     try {
         const newDonor = new Donor({
@@ -82,7 +110,8 @@ router.post('/register', async (req, res) => {
             any_condition,
             next_of_kin,
             kin_contact,
-            legal_authorization
+            legal_authorization,
+            password: hashedPassword
         });
 
         await newDonor.save();
@@ -90,6 +119,31 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Failed to register donor' });
+    }
+});
+
+// Handle donor login
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const donor = await Donor.findOne({ email });
+        if (!donor) {
+            return res.status(404).json({ success: false, message: 'Donor not found' });
+        }
+
+        // Compare password
+        const match = await bcrypt.compare(password, donor.password);
+        if (match) {
+            // Generate JWT token
+            const token = jwt.sign({ id: donor._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            res.json({ success: true, message: 'Login successful', token });
+        } else {
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Failed to log in' });
     }
 });
 

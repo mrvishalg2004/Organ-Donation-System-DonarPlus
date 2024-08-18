@@ -6,7 +6,16 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env+') });
 const appp = express();
-const cors = require('cors');
+// const cors = require('cors');
+// app.use(cors());
+
+// const loginRoutes = require('./routes/login'); // Adjust the path as necessary
+
+// app.use('/api', loginRoutes);
+
+
+const jwt = require('jsonwebtoken');
+const Donor = require('./models/donor'); // Adjust the path according to your project structure
 
 
 const app = express();
@@ -22,42 +31,6 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.error('Error connecting to MongoDB Atlas:', err);
 });
 
-//login start
-// Login route
-// Login route (Without bcrypt)
-app.post('/api/login', async (req, res) => {
-// Login route
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        // Find the user by email
-        const user = await Donor.findOne({ email }) || await Patient.findOne({ email });
-
-        if (!user) {
-            return res.status(401).json({ error: 'Invalid email or password' });
-        }
-
-        // Compare the provided password with the stored hash
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(401).json({ error: 'Invalid email or password' });
-        }
-
-        // Generate a JWT token
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        // Respond with success and token
-        res.json({ success: true, token });
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-
-//login end
 
 // Define Mongoose schemas and models
 const donorSchema = new mongoose.Schema({
@@ -115,8 +88,8 @@ const patientSchema = new mongoose.Schema({
     }
 });
 
-const Donor = mongoose.model('Donor', donorSchema);
-const Patient = mongoose.model('Patient', patientSchema);
+// const Donor = mongoose.model('Donor', donorSchema);
+// const Patient = mongoose.model('Patient', patientSchema);
 
 
 // Middleware
@@ -205,38 +178,84 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
         const hashedPassword = await bcrypt.hash(donorData.password, 10);
         donorData.password = hashedPassword;
 
-        const newDonor = new Donor(donorData);
-        await newDonor.save();
-        console.log('Donor registered successfully');
-        res.status(200).json({ message: 'Donor registered successfully', success: true });
+             // Create and save the donor
+             const newDonor = new Donor({
+                fullname, age, gender, aadhar, phone, email, address, blood_type,
+                medical_history, infection_diseases, surgical_history, allergies,
+                smoking_status, alcohol_consumption, drug_use, diet_exercise,
+                organ_to_donate, any_condition, next_of_kin, kin_contact,
+                legal_authorization, password: hashedPassword
+            });
+            await newDonor.save();
+            res.status(200).json({ message: 'Donor registered successfully', success: true });
+        } catch (err) {
+            console.error('Error inserting donor:', err);
+            res.status(500).json({ message: 'Internal server error', success: false });
+        }
+    });
+//         const newDonor = new Donor(donorData);
+//         await newDonor.save();
+//         console.log('Donor registered successfully');
+//         res.status(200).json({ message: 'Donor registered successfully', success: true });
+//     } catch (err) {
+//         console.error('Error inserting donor:', err);
+//         res.status(500).json({ message: 'Internal server error', success: false });
+//     }
+// });
+
+
+// Login route
+// login extra
+// Login route
+app.post('/api/donors/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        const donor = await Donor.findOne({ email });
+        if (!donor) {
+            return res.status(404).json({ success: false, message: 'User not found' });
+        }
+
+        const match = await bcrypt.compare(password, donor.password);
+        if (match) {
+            res.json({ success: true, message: 'Successfully logged in' });
+        } else {
+            res.status(401).json({ success: false, message: 'Invalid credentials' });
+        }
     } catch (err) {
-        console.error('Error inserting donor:', err);
-        res.status(500).json({ message: 'Internal server error', success: false });
+        console.error('Error during login:', err);
+        res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
 
 
+
+//login end
+// Login route
 // Login route
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
-    
+
     try {
-        const user = await Donor.findOne({ email }) || await Patient.findOne({ email });
+        console.log('Received email:', email); // Debugging
+        const user = await Donor.findOne({ email });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        
+
+        console.log('User found:', user); // Debugging
         const match = await bcrypt.compare(password, user.password);
         if (match) {
-            res.status(200).json({ message: 'Login successful' });
+            res.status(200).json({ message: 'Successfully logged in' });
         } else {
             res.status(401).json({ error: 'Invalid credentials' });
         }
     } catch (err) {
         console.error('Error during login:', err);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Internal server error', details: err.message });
     }
 });
+
 
 // Get all donors
 app.get('/api/donors', async (req, res) => {
