@@ -5,151 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donors Database</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <style>
-        /* Background styles */
-        body {
-            background-color: #111927;
-            background-image: 
-                radial-gradient(at 47% 33%, hsl(162.00, 77%, 40%) 0, transparent 59%), 
-                radial-gradient(at 82% 65%, hsl(218.00, 39%, 11%) 0, transparent 55%);
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            color: white;
-            overflow: hidden; /* Prevents scrollbars from appearing */
-            position: relative; /* Required for absolute positioning of circle */
-        }
-
-        /* Gradient Background Animation */
-        .gradient-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(120deg, #44fdf0, #f9cfaf);
-            background-size: 200% 200%;
-            animation: gradientAnimation 10s ease infinite;
-            z-index: -1; /* Positioned behind other content */
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Moving Gradient Circle */
-        .gradient-circle {
-            position: absolute;
-            border-radius: 50%; /* Ensures the circle is circular */
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
-            animation: moveCircle 20s ease-in-out infinite;
-            z-index: 0; /* Positioned behind other content */
-        }
-
-        @keyframes moveCircle {
-            0% {
-                top: 10%;
-                left: 10%;
-                width: 100px;
-                height: 100px;
-                transform: translate(-50%, -50%);
-            }
-            50% {
-                top: 80%;
-                left: 80%;
-                width: 200px;
-                height: 200px;
-                transform: translate(-50%, -50%);
-            }
-            100% {
-                top: 10%;
-                left: 10%;
-                width: 100px;
-                height: 100px;
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        /* Glassmorphism card effect */
-        .table-container {
-            backdrop-filter: blur(25px) saturate(116%);
-            -webkit-backdrop-filter: blur(25px) saturate(116%);
-            background-color: rgba(17, 25, 40, 0.44);
-            border-radius: 16px; /* Rounded corners for the card */
-            border: 1px solid rgba(255, 255, 255, 0.125);
-            padding: 20px;
-            margin-top: 2rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            z-index: 1; /* Ensure card is above background elements */
-        }
-
-        /* Ensures the table is scrollable */
-        .table-container .overflow-x-auto {
-            overflow-x: auto;
-            max-height: 400px; /* Adjust this value as needed */
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0;
-            padding: 0;
-            background: transparent;
-        }
-
-        thead th {
-            background-color: rgba(45, 55, 72, 0.9);
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            padding: 12px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.125);
-        }
-
-        tbody td {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.125);
-            color: #e2e8f0;
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        tbody tr:hover {
-            background-color: rgba(45, 55, 72, 0.5);
-        }
-
-        /* Header styles */
-        header {
-            background-color: rgba(255, 0, 0, 0.2);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 10px 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            z-index: 1; /* Positioned above other content */
-        }
-
-        header img {
-            height: 50px;
-        }
-
-        h3 {
-            color: #fff;
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-    </style>
+    <link href="./css/view-donors.css" rel="stylesheet">
 </head>
 <body class="relative overflow-hidden">
 
@@ -171,7 +27,7 @@
     <main class="container mx-auto p-4 pt-20">
         <!-- Spinner and Error Message -->
         <div id="spinner" class="hidden flex justify-center items-center my-4">
-            <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-200 h-32 w-32"></div>
+            <div class="loader"></div>
         </div>
         <div id="errorMessage" class="hidden bg-red-500 text-white p-4 rounded mb-4 text-center">
             Failed to load donor data. Please try again later.
@@ -203,7 +59,6 @@
             </div>
         </div>
     </main>
-
     <script>
         async function fetchDonorData() {
             const spinner = document.getElementById('spinner');
