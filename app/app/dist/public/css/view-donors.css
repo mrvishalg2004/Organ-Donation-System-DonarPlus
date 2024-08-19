@@ -143,7 +143,7 @@ h3 {
 
 /* Loader styles */
 .loader {
-    background: url('./images/loader2.gif') no-repeat center center;
+    background: url('/Organ-Donation-System-DonarPlus/app/app/dist/public/images/loader2.gif') no-repeat center center;
     background-size: contain;
     width: 80px;
     height: 80px;
