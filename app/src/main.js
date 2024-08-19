@@ -5,18 +5,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env+') });
-const appp = express();
-// const cors = require('cors');
-// app.use(cors());
-
-// const loginRoutes = require('./routes/login'); // Adjust the path as necessary
-
-// app.use('/api', loginRoutes);
-
-
-const jwt = require('jsonwebtoken');
-const Donor = require('./models/donor'); // Adjust the path according to your project structure
-
 
 const app = express();
 const port = process.env.PORT || 3005;
@@ -30,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI, {
 }).catch(err => {
     console.error('Error connecting to MongoDB Atlas:', err);
 });
-
 
 // Define Mongoose schemas and models
 const donorSchema = new mongoose.Schema({
@@ -88,9 +75,8 @@ const patientSchema = new mongoose.Schema({
     }
 });
 
-// const Donor = mongoose.model('Donor', donorSchema);
-// const Patient = mongoose.model('Patient', patientSchema);
-
+const Donor = mongoose.model('Donor', donorSchema);
+const Patient = mongoose.model('Patient', patientSchema);
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -107,6 +93,11 @@ const removeUndefinedFields = (obj) => {
 
 // API Routes
 
+// Utility function to validate password strength
+const validatePassword = (password) => {
+    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+    return passwordRegex.test(password);
+};
 
 // Donor registration
 app.post('/api/donor/register', multer().none(), async (req, res) => {
@@ -132,12 +123,22 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
         next_of_kin: req.body.next_of_kin,
         kin_contact: req.body.kin_contact,
         legal_authorization: req.body.legal_authorization,
-        password: req.body.password // Directly storing the password
+        password: req.body.password // Ensure password is included
     });
 
+    // Validate the password
+    if (!validatePassword(donorData.password)) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.', success: false });
+    }
+
     try {
+        console.log('Donor data:', donorData);
+        const hashedPassword = await bcrypt.hash(donorData.password, 10);
+        donorData.password = hashedPassword;
+
         const newDonor = new Donor(donorData);
         await newDonor.save();
+        console.log('Donor registered successfully');
         res.status(200).json({ message: 'Donor registered successfully', success: true });
     } catch (err) {
         console.error('Error inserting donor:', err);
@@ -145,10 +146,12 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
     }
 });
 
-// Donor registration
-app.post('/api/donor/register', multer().none(), async (req, res) => {
-    const donorData = removeUndefinedFields({
-        fullname: req.body.fullname,
+// Patient registration
+app.post('/api/patient/register', multer().none(), async (req, res) => {
+    console.log('Request Body:', req.body); // Log the request body to debug
+
+    const patientData = removeUndefinedFields({
+        fullName: req.body.fullname,
         age: req.body.age,
         gender: req.body.gender,
         aadhar: req.body.aadhar,
@@ -164,98 +167,57 @@ app.post('/api/donor/register', multer().none(), async (req, res) => {
         alcohol_consumption: req.body.alcohol_consumption,
         drug_use: req.body.drug_use,
         diet_exercise: req.body.diet_exercise,
-        organ_to_donate: req.body.organ_to_donate,
-        any_condition: req.body.any_condition,
-        next_of_kin: req.body.next_of_kin,
-        kin_contact: req.body.kin_contact,
-        legal_authorization: req.body.legal_authorization,
-        password: req.body.password 
+        organ_needed: req.body.organ_needed,
+        reason: req.body.reason,
+        consent: req.body.consent,
+        legal_information: req.body.legal_information,
+        password: req.body.password // Ensure password is included
     });
-    
+
+    // Validate the password
+    if (!validatePassword(patientData.password)) {
+        return res.status(400).json({ message: 'Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.', success: false });
+    }
 
     try {
-        console.log('Donor data:', donorData);
-        const hashedPassword = await bcrypt.hash(donorData.password, 10);
-        donorData.password = hashedPassword;
+        console.log('Patient data:', patientData);
 
-             // Create and save the donor
-             const newDonor = new Donor({
-                fullname, age, gender, aadhar, phone, email, address, blood_type,
-                medical_history, infection_diseases, surgical_history, allergies,
-                smoking_status, alcohol_consumption, drug_use, diet_exercise,
-                organ_to_donate, any_condition, next_of_kin, kin_contact,
-                legal_authorization, password: hashedPassword
-            });
-            await newDonor.save();
-            res.status(200).json({ message: 'Donor registered successfully', success: true });
-        } catch (err) {
-            console.error('Error inserting donor:', err);
-            res.status(500).json({ message: 'Internal server error', success: false });
-        }
-    });
-//         const newDonor = new Donor(donorData);
-//         await newDonor.save();
-//         console.log('Donor registered successfully');
-//         res.status(200).json({ message: 'Donor registered successfully', success: true });
-//     } catch (err) {
-//         console.error('Error inserting donor:', err);
-//         res.status(500).json({ message: 'Internal server error', success: false });
-//     }
-// });
+        // Ensure the password is not undefined before hashing
+        const hashedPassword = await bcrypt.hash(patientData.password, 10);
+        patientData.password = hashedPassword;
 
-
-// Login route
-// login extra
-// Login route
-app.post('/api/donors/login', async (req, res) => {
-    const { email, password } = req.body;
-
-    try {
-        const donor = await Donor.findOne({ email });
-        if (!donor) {
-            return res.status(404).json({ success: false, message: 'User not found' });
-        }
-
-        const match = await bcrypt.compare(password, donor.password);
-        if (match) {
-            res.json({ success: true, message: 'Successfully logged in' });
-        } else {
-            res.status(401).json({ success: false, message: 'Invalid credentials' });
-        }
+        const newPatient = new Patient(patientData);
+        await newPatient.save();
+        console.log('Patient registered successfully');
+        res.status(200).json({ message: 'Patient registered successfully', success: true });
     } catch (err) {
-        console.error('Error during login:', err);
-        res.status(500).json({ success: false, message: 'Internal server error' });
+        console.error('Error inserting patient:', err);
+        res.status(500).json({ message: 'Internal server error', success: false });
     }
 });
 
 
-
-//login end
-// Login route
 // Login route
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
-
+    
     try {
-        console.log('Received email:', email); // Debugging
-        const user = await Donor.findOne({ email });
+        const user = await Donor.findOne({ email }) || await Patient.findOne({ email });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-
-        console.log('User found:', user); // Debugging
+        
         const match = await bcrypt.compare(password, user.password);
         if (match) {
-            res.status(200).json({ message: 'Successfully logged in' });
+            res.status(200).json({ message: 'Login successful' });
         } else {
             res.status(401).json({ error: 'Invalid credentials' });
         }
     } catch (err) {
         console.error('Error during login:', err);
-        res.status(500).json({ error: 'Internal server error', details: err.message });
+        res.status(500).json({ error: 'Internal server error' });
     }
 });
-
 
 // Get all donors
 app.get('/api/donors', async (req, res) => {
