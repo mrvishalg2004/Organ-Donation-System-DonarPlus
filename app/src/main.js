@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
@@ -95,7 +97,7 @@ const removeUndefinedFields = (obj) => {
 
 // Utility function to validate password strength
 const validatePassword = (password) => {
-    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
 };
 
@@ -198,6 +200,30 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
 
 
 // Login route
+// Login route
+app.post('/api/login', async (req, res) => {
+    const { email, password, userType } = req.body;
+
+    try {
+        const model = userType === 'donor' ? Donor : Patient;
+        const user = await model.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
+            res.status(200).json({ message: 'Login successful' });
+        } else {
+            res.status(401).json({ error: 'Invalid credentials' });
+        }
+    } catch (err) {
+        console.error('Error during login:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
     
@@ -296,7 +322,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: 'Internal server error', error: err.message });
 });
 
-// Start the server
 // Start the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/homepage.html`);

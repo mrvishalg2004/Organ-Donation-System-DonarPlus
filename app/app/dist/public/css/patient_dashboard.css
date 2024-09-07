@@ -1,0 +1,61 @@
+body {
+    background-image: url('./images/hospital-background.jpg'); /* Ensure this path is correct */
+    background-size: cover;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+h2 {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+p {
+    color: #34495e;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+.nav-logo {
+    width: 150px;
+}
+
+nav ul {
+    list-style: none;
+    float: right;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-left: 15px;
+}
+
+.btn-primary {
+    background-color: #0069d9;
+    border-color: #0069d9;
+    color: white;
+    font-weight: 600;
+}
+
+a.hover {
+    color: white;
+    text-decoration: none;
+}
+
+a.hover:hover {
+    text-decoration: underline;
+}

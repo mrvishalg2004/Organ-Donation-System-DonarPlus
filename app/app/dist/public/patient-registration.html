@@ -44,7 +44,7 @@
             <h3>Register an Organ Recipient</h3>
             <div class="col-md-4 form-bg">
                 <!-- Patient Registration Form -->
-                <form id="patientRegistrationForm">
+                <form id="patientRegistrationForm" action="/api/patient/register" method="POST">
                     <!-- Step 1: Personal Information -->
                     <div id="step1">
                         <h2>Personal Information 🗃️</h2>
@@ -81,7 +81,7 @@
                             <label for="PatientPassword">Password:</label>
                             <div class="password-wrapper">
                                 <input type="password" id="PatientPassword" name="password" class="form-control" placeholder="Password" required>
-                                <i class="fa fa-eye toggle-password" onclick="togglePasswordVisibility()"></i>
+                                <i class="fa fa-eye toggle-password" id="passwordToggle"></i>
                             </div>
                         </div>
 
@@ -212,7 +212,7 @@
                         </div>
                         <div class="form-group">
                             <label for="LegalInformation">Legal Information:</label>
-                            <textarea id="LegalInformation" name="legal_information" class="form-control" placeholder="Legal Information" required></textarea>
+                            <textarea id="LegalInformation-" name="legal_information" class="form-control" placeholder="Legal Information" required></textarea>
                         </div>
                         <div class="btn-center">
                             <button type="button" class="btn btn-secondary btn-back" onclick="showStep(4)">Back</button>
@@ -267,8 +267,19 @@
         }
     }
 
+    function validatePassword(password) {
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+        return passwordPattern.test(password);
+    }
+
     document.getElementById('patientRegistrationForm').addEventListener('submit', function (event) {
         event.preventDefault();
+
+        const password = document.getElementById('PatientPassword').value;
+        if (!validatePassword(password)) {
+            alert('Password must be at least 8 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.');
+            return;
+        }
 
         const formData = new FormData(this);
 
@@ -297,6 +308,3 @@
 
 </body>
 </html>
-
-
-

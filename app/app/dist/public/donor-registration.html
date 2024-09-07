@@ -37,7 +37,7 @@
                 <div id="message" class="alert hidden"></div>
 
                 <!-- Donor Registration Form -->
-                <form id="donorRegistrationForm">
+                <form id="donorRegistrationForm" action="/api/donor/register" method="POST">
                     <!-- Step 1: Personal Information -->
                     <div id="step1">
                         <h2>Personal Information 🗃️</h2>
@@ -229,6 +229,7 @@
                         </div>
                     </div>
                 </form>
+                <div id="message"></div>
             </div>
         </div>
     </div>
@@ -289,12 +290,13 @@
                 donorRegistrationForm.reset();
                 showStep(1);
             } else {
-                messageDiv.textContent = 'Failed to register donor. Please try again.';
+                messageDiv.textContent = data.message || 'Failed to register donor. Please try again.';
                 messageDiv.classList.remove('hidden', 'alert-success');
                 messageDiv.classList.add('alert-error');
             }
         })
         .catch(error => {
+            console.error('Error:', error);
             messageDiv.textContent = 'An error occurred. Please try again.';
             messageDiv.classList.remove('hidden', 'alert-success');
             messageDiv.classList.add('alert-error');

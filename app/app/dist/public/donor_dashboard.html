@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/fontawesome-all.css" rel="stylesheet">
+    <link rel="icon" href="images/organ-donation-logo-new.svg">
+    <script src="app/src/main.js" defer></script>
+    <link rel="stylesheet" href="./css/patient_dashboard.css">
+
+    <title>Dashboard - DonarPlus</title>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <a href="index.html"><img class="nav-logo" src="./images/mainlogo.png" alt="DonarPlus"></a>
+                        <ul>
+                            <li>
+                                <button class="btn btn-sm btn-primary homepage">
+                                    <a class="hover" href="homepage.html">Homepage</a>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="row center-box">
+                <div class="col-md-6 glass-effect">
+                    <h2>My Information</h2>
+                    <p><strong>Name:</strong> <span id="userName">John Doe</span></p>
+                    <p><strong>Age:</strong> <span id="userAge">30</span></p>
+                    <p><strong>Gender:</strong> <span id="userGender">Male</span></p>
+                    <p><strong>Blood Type:</strong> <span id="userBloodType">O+</span></p>
+                    <p><strong>Organ:</strong> <span id="userOrgan">Kidney</span></p>
+                    <p><strong>Status:</strong> <span id="matchStatus">Match Found</span></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <!-- Add footer content here -->
+    </footer>
+    <script>
+        // Replace the below lines with actual data fetching logic.
+        // Example: Fetching user data from the backend
+        function fetchUserData() {
+            // Example function to get user data. Replace this with an actual API call.
+            const userData = {
+                name: "John Doe",
+                age: 30,
+                gender: "Male",
+                bloodType: "O+",
+                organ: "Kidney",
+                matchStatus: "Match Found"
+            };
+
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userAge').textContent = userData.age;
+            document.getElementById('userGender').textContent = userData.gender;
+            document.getElementById('userBloodType').textContent = userData.bloodType;
+            document.getElementById('userOrgan').textContent = userData.organ;
+            document.getElementById('matchStatus').textContent = userData.matchStatus;
+        }
+
+        fetchUserData();
+    </script>
+</body>
+</html>

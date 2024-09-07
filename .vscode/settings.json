@@ -26,6 +26,5 @@
             "database": "donarplus",
             "username": "root"
         }
-    ],
-    "liveServer.settings.port": 5501
+    ]
 }

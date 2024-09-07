@@ -1,64 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="css/view-donors.css" rel="stylesheet">
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/fontawesome-all.css" rel="stylesheet">
+    <link rel="icon" href="../images/organ-donation-logo-new.svg">
     <title>Donors Database</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="./css/view-donors.css" rel="stylesheet">
 </head>
-<body class="relative overflow-hidden">
-
-    <!-- Morphing Gradient Background -->
-    <div class="gradient-bg"></div>
-
-    <!-- Moving Gradient Circle -->
-    <div class="gradient-circle"></div>
-
-    <!-- Navigation -->
-    <header class="fixed top-0 left-0 w-full z-10">
-        <div class="container mx-auto p-4 flex justify-between items-center">
-            <a href="index.html" class="text-xl font-bold">
-                <img src="./images/mainlogo.png" alt="DonorPlus">
-            </a>
-        </div>
-    </header>
-
-    <main class="container mx-auto p-4 pt-20">
-        <!-- Spinner and Error Message -->
-        <div id="spinner" class="hidden flex justify-center items-center my-4">
-            <div class="loader"></div>
-        </div>
-        <div id="errorMessage" class="hidden bg-red-500 text-white p-4 rounded mb-4 text-center">
-            Failed to load donor data. Please try again later.
-        </div>
-
-        <!-- Donors Table -->
-        <div class="table-container">
-            <h3>Details of Registered Donors</h3>
-            <div class="overflow-x-auto">
-                <table id="donorsTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>Aadhar No.</th>
-                            <th>Blood Type</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Address</th>
-                            <th>Organ to Donate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data will be dynamically populated -->
-                    </tbody>
-                </table>
+<body>
+    <!-- start of navigation -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav>
+                        <a href="index.html"><img class="nav-logo" src="./images/mainlogo.png" alt="DonarPlus"></a>
+                    </nav>
+                </div>
             </div>
         </div>
+    </header>
+    <!-- end of navigation -->
+
+    <main>
+        <div class="container">
+            <div class="row center-box">
+                <div class="col-md-12">
+                    <div class="spinner hidden" id="spinner">
+                        <div class="bounce1"></div>
+                        <div class="bounce2"></div>
+                        <div class="bounce3"></div>
+                    </div>
+                    <div class="error-message hidden" id="errorMessage">Failed to load donor data. Please try again later.</div>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+                
+        <div class="container">
+            <div class="row center-box">
+                <div class="col-md-12">
+                    <h3>Details of Registered Donors</h3>
+                    <div class="table-responsive">
+                        <table id="donorsTable" class="table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Aadhar no.</th>
+                                    <th>Blood Type</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Address</th>
+                                    <th>Organ to donate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be dynamically populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
     </main>
+    
     <script>
         async function fetchDonorData() {
             const spinner = document.getElementById('spinner');
@@ -69,9 +81,10 @@
                 spinner.classList.remove('hidden');
                 errorMessage.classList.add('hidden');
     
-                const response = await fetch('/api/donors');
+                const response = await fetch('/api/donors'); // Adjust endpoint if needed
     
                 if (!response.ok) {
+                    // Handle non-OK responses
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
     
@@ -80,6 +93,7 @@
                     const donors = await response.json();
                     populateDonorsTable(donors);
                 } else {
+                    // Log response text for debugging
                     const responseText = await response.text();
                     throw new Error(`Received non-JSON response. Response: ${responseText}`);
                 }
@@ -94,20 +108,20 @@
     
         function populateDonorsTable(donors) {
             const donorsTableBody = document.getElementById('donorsTable').getElementsByTagName('tbody')[0];
-            donorsTableBody.innerHTML = '';
+            donorsTableBody.innerHTML = ''; // Clear any existing data
         
             donors.forEach(donor => {
                 const row = donorsTableBody.insertRow();
-                row.insertCell(0).textContent = donor._id || 'N/A';
-                row.insertCell(1).textContent = donor.fullname || 'N/A';
-                row.insertCell(2).textContent = donor.age || 'N/A';
-                row.insertCell(3).textContent = donor.gender || 'N/A';
-                row.insertCell(4).textContent = donor.aadhar || 'N/A';
-                row.insertCell(5).textContent = donor.blood_type || 'N/A';
-                row.insertCell(6).textContent = donor.email || 'N/A';
-                row.insertCell(7).textContent = donor.phone || 'N/A';
-                row.insertCell(8).textContent = donor.address || 'N/A';
-                row.insertCell(9).textContent = donor.organ_to_donate || 'N/A';
+                row.insertCell(0).textContent = donor._id || 'N/A'; // ID
+                row.insertCell(1).textContent = donor.fullname || 'N/A'; // Name
+                row.insertCell(2).textContent = donor.age || 'N/A'; // Age
+                row.insertCell(3).textContent = donor.gender || 'N/A'; // Gender
+                row.insertCell(4).textContent = donor.aadhar || 'N/A'; // Aadhar no.
+                row.insertCell(5).textContent = donor.blood_type || 'N/A'; // Blood Type
+                row.insertCell(6).textContent = donor.email || 'N/A'; // Email
+                row.insertCell(7).textContent = donor.phone || 'N/A'; // Phone Number
+                row.insertCell(8).textContent = donor.address || 'N/A'; // Address
+                row.insertCell(9).textContent = donor.organ_to_donate || 'N/A'; // Organ needed
             });
         }
         
