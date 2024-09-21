@@ -47,7 +47,8 @@ const donorSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    matchStatus: String  // Add this line if it should exist in the schema
 });
 
 const patientSchema = new mongoose.Schema({
@@ -201,49 +202,119 @@ app.post('/api/patient/register', multer().none(), async (req, res) => {
 
 // Login route
 // Login route
+// app.post('/api/login', async (req, res) => {
+//     const { email, password, userType } = req.body;
+
+//     try {
+//         const model = userType === 'donor' ? Donor : Patient;
+//         const user = await model.findOne({ email });
+
+//         if (!user) {
+//             return res.status(404).json({ error: 'User not found' });
+//         }
+
+//         const match = await bcrypt.compare(password, user.password);
+//         if (match) {
+//             res.status(200).json({ message: 'Login successful' });
+//         } else {
+//             res.status(401).json({ error: 'Invalid credentials' });
+//         }
+//     } catch (err) {
+//         console.error('Error during login:', err);
+//         res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
+
 app.post('/api/login', async (req, res) => {
-    const { email, password, userType } = req.body;
+    const { email, password, role } = req.body;  // Extract email, password, and role from the request body
 
     try {
-        const model = userType === 'donor' ? Donor : Patient;
-        const user = await model.findOne({ email });
-
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        const match = await bcrypt.compare(password, user.password);
-        if (match) {
-            res.status(200).json({ message: 'Login successful' });
-        } else {
-            res.status(401).json({ error: 'Invalid credentials' });
-        }
-    } catch (err) {
-        console.error('Error during login:', err);
-        res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
-    
-    try {
-        const user = await Donor.findOne({ email }) || await Patient.findOne({ email });
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
-        }
+        let user; // This will store the user based on the role
         
-        const match = await bcrypt.compare(password, user.password);
-        if (match) {
-            res.status(200).json({ message: 'Login successful' });
+        // Depending on the role, check the Donor or Patient collection
+        if (role === 'donor') {
+            user = await Donor.findOne({ email }); // Look for user in Donor collection
+        } else if (role === 'patient') {
+            user = await Patient.findOne({ email }); // Look for user in Patient collection
         } else {
-            res.status(401).json({ error: 'Invalid credentials' });
+            return res.status(400).json({ error: 'Invalid role selected' });
         }
+
+        // If no user is found
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Compare the provided password with the hashed password in the database
+        const match = await bcrypt.compare(password, user.password);
+        
+        if (match) {
+            // Passwords match - Login successful
+            return res.status(200).json({ message: 'Login successful', user });
+        } else {
+            // Passwords don't match
+            return res.status(401).json({ error: 'Invalid credentials' });
+        }
+
     } catch (err) {
         console.error('Error during login:', err);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Fetch donor info by email or ID (after login)
+app.get('/api/donor/:email', async (req, res) => {
+    const email = req.params.email;
+
+    try {
+        const donor = await Donor.findOne({ email });
+
+        if (!donor) {
+            return res.status(404).json({ error: 'Donor not found' });
+        }
+
+        res.status(200).json({
+            fullname: donor.fullname,
+            age: donor.age,
+            gender: donor.gender,
+            blood_type: donor.blood_type,
+            organ_to_donate: donor.organ_to_donate,
+            matchStatus: donor.matchStatus || 'No match found' // Ensure matchStatus is returned
+        });
+    } catch (err) {
+        console.error('Error fetching donor:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+
+app.get('/api/patient/:email', async (req, res) => {
+    const email = req.params.email;
+
+    try {
+        // Find the patient by email
+        const patient = await Patient.findOne({ email });
+
+        if (!patient) {
+            return res.status(404).json({ error: 'Patient not found' });
+        }
+
+        // Return patient information
+        res.status(200).json({
+            fullName: patient.fullName,
+            age: patient.age,
+            gender: patient.gender,
+            blood_type: patient.blood_type,
+            organ_needed: patient.organ_needed,
+            matchStatus: patient.matchStatus || 'No match found'
+        });
+    } catch (err) {
+        console.error('Error fetching patient:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
 
 // Get all donors
 app.get('/api/donors', async (req, res) => {

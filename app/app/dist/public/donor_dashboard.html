@@ -55,28 +55,40 @@
         <!-- Add footer content here -->
     </footer>
     <script>
-        // Replace the below lines with actual data fetching logic.
-        // Example: Fetching user data from the backend
-        function fetchUserData() {
-            // Example function to get user data. Replace this with an actual API call.
-            const userData = {
-                name: "John Doe",
-                age: 30,
-                gender: "Male",
-                bloodType: "O+",
-                organ: "Kidney",
-                matchStatus: "Match Found"
-            };
-
-            document.getElementById('userName').textContent = userData.name;
-            document.getElementById('userAge').textContent = userData.age;
-            document.getElementById('userGender').textContent = userData.gender;
-            document.getElementById('userBloodType').textContent = userData.bloodType;
-            document.getElementById('userOrgan').textContent = userData.organ;
-            document.getElementById('matchStatus').textContent = userData.matchStatus;
+        // Function to fetch donor data based on the logged-in user's email
+        async function fetchUserData() {
+            // Assuming you store the logged-in user's email in localStorage or sessionStorage after login
+            const email = localStorage.getItem('userEmail'); // You might store this during login
+    
+            if (!email) {
+                console.error('User email not found in storage.');
+                return;
+            }
+    
+            try {
+                // Fetch donor data from the backend
+                const response = await fetch(`/api/donor/${email}`);
+                const userData = await response.json();
+    
+                if (response.ok) {
+                    // Populate the dashboard with dynamic data
+                    document.getElementById('userName').textContent = userData.fullname;
+                    document.getElementById('userAge').textContent = userData.age;
+                    document.getElementById('userGender').textContent = userData.gender;
+                    document.getElementById('userBloodType').textContent = userData.blood_type;
+                    document.getElementById('userOrgan').textContent = userData.organ_to_donate;
+                    document.getElementById('matchStatus').textContent = userData.matchStatus;
+                } else {
+                    console.error('Failed to fetch user data:', userData.error);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
         }
-
-        fetchUserData();
+    
+        // Fetch user data once the page loads
+        window.onload = fetchUserData;
     </script>
+    
 </body>
 </html>
