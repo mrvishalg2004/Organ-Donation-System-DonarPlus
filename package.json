@@ -7,7 +7,7 @@
     "body-parser": "^1.20.2",
     "crypto": "^1.0.1",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "kerberos": "^2.1.0",
     "mongodb": "^6.8.0",
     "mongodb-client-encryption": "^6.0.1",
@@ -15,5 +15,17 @@
     "otp-generator": "^4.0.1",
     "snappy": "^7.2.2",
     "socks": "^2.8.3"
-  }
+  },
+  "name": "donorplus",
+  "description": "The Organ Donation System is a decentralized web application designed to facilitate organ donation and transplantation. This platform allows donors to register and donate their organs, while patients can request and receive organs. This technology to ensure transparency, security, and efficiency in the organ donation process.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sharayu",
+  "license": "ISC"
 }

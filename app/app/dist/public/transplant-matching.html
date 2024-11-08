@@ -126,8 +126,8 @@
         async function fetchAndMatchData() {
             try {
                 // Fetch patients and donors data
-                const patientsResponse = await fetch('/api/patients'); // Ensure the endpoint is correct
-                const donorsResponse = await fetch('/api/donors'); // Ensure the endpoint is correct
+                const patientsResponse = await fetch('/api/patient'); // Ensure the endpoint is correct
+                const donorsResponse = await fetch('/api/donor'); // Ensure the endpoint is correct
                 
                 // Check if the responses are successful
                 if (!patientsResponse.ok) {

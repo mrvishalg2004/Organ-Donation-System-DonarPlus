@@ -95,7 +95,7 @@
                 spinner.classList.remove('hidden');
                 errorMessage.classList.add('hidden');
 
-                const response = await fetch('/api/patients'); // Adjust endpoint if needed
+                const response = await fetch('/api/patient'); // Adjust endpoint if needed
                 
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
