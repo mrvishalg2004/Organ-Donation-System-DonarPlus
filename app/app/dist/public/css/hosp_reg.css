@@ -1,0 +1,791 @@
+
+*{
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+a{
+  text-decoration: none !important; 
+  color: #fff !important;
+}
+
+
+html{
+  /* background-color: #94e1ff; */
+}
+
+/* body{
+  background: #ffffff !important;
+  font-family: "Montserrat", sans-serif !important;
+} */
+/* index.html file background image code */
+
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/index7.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(10px); /* Adjust the blur intensity as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
+}
+
+/* Ensure content appears above the blurred background */
+main {
+  position: relative;
+  z-index: 1;
+}
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/reg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(3px); /* Adjust the blur intensity as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
+}
+
+/* Ensure content appears above the blurred background */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+
+main{
+  margin-bottom: 1rem;
+}
+
+p {
+  color: #fff;
+  margin-bottom: 0rem !important;
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+}
+
+h2 {
+  color: white;
+}
+
+h3 {
+  color: #ffffff;
+}
+
+/* .container.visibility{
+  visibility: hidden;
+}
+ */
+/**************************/
+/*     02. Navigation     */
+/**************************/
+
+#header {
+  overflow: visible;
+  position: relative;    
+}
+
+.row.center-box{
+  justify-content: center;
+}
+
+nav{
+  background-color: ffffff;
+  height: 100px;
+  width: 100%;
+}
+
+nav ul{
+  float: right;
+  margin-right: 50px;
+}
+
+nav ul li{
+  display: inline-block;
+  line-height: 100px;
+  margin: 0 5px;
+}
+
+nav ul li a{
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 4px;
+  
+}
+
+a.active,a:hover{
+  /* background: #fff; */
+  transition: .5s;
+  text-decoration: none;
+}
+
+a.hover:hover{
+  background: none;
+  /* padding: 0px; */
+}
+
+
+img.nav-logo{
+  height: 70px;
+  padding: 20px 0px 0px 50px;
+}
+
+/*********************/
+/*    03. Header     */
+/*********************/
+
+.left-content{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.right-content{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.transplant-btn{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* General text color for search sections */
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 310px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  color: #005f82 /* Default text color */
+}
+
+.search h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #005f82 /* Heading color */
+}
+
+/* Specific text color for details sections */
+.details p {
+  color: #005f82 /* Text color for donor and patient details */
+}
+
+/* Individual styling for search status messages */
+#searchDonorCheck, #searchPatientCheck {
+  padding: 8px;
+  text-align: center;
+  color: #005f82; /* Specific color for search status messages */
+}
+
+/* Ensuring consistent color styling within container elements */
+.col-md-4.container-1, .col-md-4.container-2 {
+  color: #005f82 /* Consistent text color for both containers */
+}
+
+
+.left-content.width{
+  display: block;
+  width: 100%;
+}
+
+.right-content.width{
+  display: block;
+  width: 100%;
+}
+
+.btn-primary.custom{
+  display: block;
+  width: 100%;
+  background-color: #005f82;
+  border: none;
+  font-size: 1.5em;
+  font-weight: 600;
+  padding: 20px;
+  margin: 3px;
+}
+
+.btn-primary.custom.custom-tm{
+  display: block;
+  width: 100%; 
+}
+
+.btn-primary.custom:hover{
+  background-color: #004964;
+}
+
+.btn-primary.search{
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+.btn-primary.homepage{
+  background-color: #005f82;
+  border: none;
+}
+
+.btn-primary.homepage:hover{
+  background-color: #004964;
+}
+
+/*********************/
+/*   04. Forms       */
+/*********************/
+
+.col-md-4.form-bg{
+  color: #fff;
+  background-color: #005f82;
+  border-radius: 8px;
+  padding: 15px 29px;
+}
+
+.col-md-4 p{
+  font-weight: 600;
+}
+
+.row h3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #005f82;
+  font-weight: 700;
+  padding: 10px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="text-home"],
+select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.btn-primary.register{
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+#register{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+}
+
+
+
+#group label{ 
+  cursor: pointer;
+}
+
+#group label span{
+  position: relative;
+  display: inline-block;
+  background-color: #004964;
+  color: #fff;
+  margin: 5px 2px;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+  user-select: none;
+  overflow: hidden;
+}
+
+#group label span::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: rgba(255, 255, 255, );
+}
+
+#group input[type="checkbox"]
+{
+  display: none;
+}
+
+#group input[type="checkbox"]:checked ~ span{
+  color: #005f82;
+  background: #fff;
+}
+
+#group input[type="radio"]
+{
+  display: none;
+}
+
+#group input[type="radio"]:checked ~ span{
+  color: #005f82;
+  background: #fff;
+}
+
+/* .btn-warning.btn-1{
+  font-size: 24px;
+  color: #fff;
+  background-color: #0079a8;
+  border-color: #ffffff00;
+  position: relative;
+  border-radius: 8px;
+  transform: translateX(350%);
+  padding: 15px 15px 0px 15px ;
+  margin: 0;
+}
+
+.btn-warning.btn-1:hover{
+  color: #fff;
+  background-color: #005f82;
+}
+
+
+.btn:hover {
+  color: #212529;
+  text-decoration: none;
+}
+ */
+/* .custom-control-input:disabled ~ .custom-control-label {
+  color: #ffffff;
+} */
+
+/*********************/
+/*  05. Table view   */
+/*********************/
+
+.content-table{
+  border: 1px solid black;
+}
+
+table {  
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  text-align: center;
+  /* border: 1px solid #00000069; */
+  padding: 15px;
+  font-weight: 600;
+}
+
+th {
+    background-color: #005f82;
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+tr {
+    background-color: #ffffff;
+    color: black;
+    text-align: center;
+}
+
+tr:hover {
+    background-color: rgb(212, 212, 212);
+    color: #000000;
+}
+
+.table-responsive {
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+#pending-table-message{
+  text-align: center;
+}
+
+#PledgeMessage{
+  text-align: center;
+}
+
+.verification{
+  width: 100%;
+  background-color: #005f82;
+  border-radius: 8.5px;
+  padding: 25px;
+  margin: 10px 0px;
+}
+
+.verification h2{
+  text-align: center;
+  font-weight: 600;
+}
+
+.verification.hidden{
+  visibility: hidden;
+}
+
+/*********************/
+/*    06. Alerts     */
+/*********************/
+
+#DonorInputCheck{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#PatientInputCheck{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#PledgeInputCheck{
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert {
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  opacity: 1;
+  transition: opacity 0.6s;
+}
+
+.alert.warning {
+  /* padding: 1px; */
+  font-weight: 600;
+  background: #e69100;
+  display: none;
+}
+
+.closebtn {
+  color: white;
+  float: right;
+  transform: translateY(-100%);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+/*************************/
+/*     07. Preloader     */
+/*************************/
+
+.spinner {
+  position: fixed;
+}
+
+.spinner > div {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 100%;
+    background-color: #0079a8;
+  text-align: center;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% { -webkit-transform: scale(0); }
+    40% { -webkit-transform: scale(1.0); }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        -ms-transform: scale(0);
+        transform: scale(0);
+    } 40% {
+        -webkit-transform: scale(1.0);
+        -ms-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
+/* Dashbord page css */
+.search h2 {
+  background: linear-gradient(45deg, rgba(26, 41, 128, 0.8), rgba(38, 208, 206, 0.8));
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+
+
+/* code */
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/index6.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(10px); /* Adjust the blur intensity as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
+}
+
+/* Ensure content appears above the blurred background */
+main {
+  position: relative;
+  z-index: 1;
+}
+body {
+  position: relative;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('../images/index7.jpg') no-repeat center center fixed;
+  background-size: cover;
+  filter: blur(3px); /* Adjust the blur intensity as needed */
+  z-index: -1; /* Ensure the pseudo-element is behind the content */
+}
+
+/* Ensure content appears above the blurred background */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+
+.hidden { display: none; }
+.form-group { margin-bottom: 15px; }
+.form-bg { padding: 20px; background: #f9f9f9; border-radius: 10px; box-shadow: 0 0 10px rgba(24, 51, 255, 0.1); }
+.btn-center { display: flex; justify-content: center; margin-top: 20px; }
+.btn-primary { padding: 10px 20px; margin: 0 10px; }
+.btn-back { margin-right: 10px; }
+.alert { padding: 10px; margin: 10px 0; border-radius: 5px; }
+.alert-success { background-color: #d4edda; color: #155724; }
+.alert-error { background-color: #f8d7da; color: #721c24; }
+.is-invalid { border-color: #dc3545; }  
+
+
+/* Adjust spacing for mobile and tablet views */
+@media (max-width: 768px) {
+  .col-md-4.form-bg {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .container, .row {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+
+/* Password feild code */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 40px; /* Make room for the icon */
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #007bff;
+}
+/* Password feild code end */
+
+
+/*OTP code */
+
+/* General Styles */
+.hidden {
+display: none;
+}
+
+.alert {
+padding: 10px;
+margin-top: 10px;
+border-radius: 4px;
+font-size: 14px;
+}
+
+.alert-success {
+background-color: #d4edda;
+color: #155724;
+border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+background-color: #f8d7da;
+color: #721c24;
+border: 1px solid #f5c6cb;
+}
+
+/* OTP Verification Section */
+.hidden {
+display: none;
+}
+/* Facility Selection Styles */
+.facility-option {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.facility-option label {
+  color: #005f82;
+  font-weight: 600;
+  width: 50%;
+}
+
+.facility-option select {
+  width: 45%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #005f82;
+}
+
+.facility-option select:focus {
+  outline: none;
+  border-color: #004964;
+  box-shadow: 0 0 5px rgba(0, 95, 130, 0.5);
+}
+
+/* Service Selection Styles */
+.service-option {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-option label {
+  color: #005f82;
+  font-weight: 600;
+  width: 50%;
+}
+
+.service-option select {
+  width: 45%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #005f82;
+}
+
+.service-option select:focus {
+  outline: none;
+  border-color: #004964;
+  box-shadow: 0 0 5px rgba(0, 95, 130, 0.5);
+}

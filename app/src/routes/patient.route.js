@@ -6,7 +6,6 @@ const multer = require('multer');
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 
-
 // Utility function to remove undefined fields from an object
 const removeUndefinedFields = (obj) => {
     return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v !== undefined));

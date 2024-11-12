@@ -7,6 +7,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const Donor = require('../models/donor.model.js');
 const Patient = require('../models/patient.model.js');
+const Hospital = require('../models/hospital.model.js');
+const User = require('../models/User.model.js');
 
 // Create a transporter for sending emails
 const transporter = nodemailer.createTransport({
@@ -35,8 +37,10 @@ const validatePassword = (password) => {
             user = await Donor.findOne({ email }); // Look for user in Donor collection
         } else if (role === 'patient') {
             user = await Patient.findOne({ email }); // Look for user in Patient collection
+        } else if(role === 'hospital'){
+            user = await Hospital.findOne({ email });
         } else {
-            return res.status(400).json({ error: 'Invalid role selected' });
+            return res.status(400).json({ error: 'Invalid role' });
         }
 
         // If no user is found
@@ -44,9 +48,14 @@ const validatePassword = (password) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        console.log(user);
-        // Compare the provided password with the hashed password in the database
-        const match = user.isPasswordCorrect(password);
+        // console.log('Entered password:', password);
+        // console.log('Stored hashed password:', user.password);
+
+        //Compare the provided password with the hashed password in the database
+        //const match = user.isPasswordCorrect(password);
+        const match = await bcrypt.compare(password, user.password);
+        console.log('Password match result:', match);
+
         
         if (match) {
             // Passwords match - Login successful
@@ -61,6 +70,59 @@ const validatePassword = (password) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
+
+// Login route
+// authRouter.post('/login', async (req, res) => {
+//     const { email, password, role } = req.body;  // Extract email, password, and role from the request body
+
+//     try {
+//         let user; // This will store the user based on the role
+
+//         // Depending on the role, check the Donor, Patient, or Hospital collection
+//         if (role === 'donor') {
+//             user = await Donor.findOne({ email }); // Look for user in Donor collection
+//         } else if (role === 'patient') {
+//             user = await Patient.findOne({ email }); // Look for user in Patient collection
+//         } else if (role === 'hospital') {
+//             user = await Hospital.findOne({ email }); // Look for user in Hospital collection
+//         } else {
+//             return res.status(400).json({ error: 'Invalid role specified' });
+//         }
+
+//         // Check if the user was found
+//         if (!user) {
+//             console.log(`User with email ${email} and role ${role} not found`);
+//             return res.status(404).json({ error: 'User not found' });
+//         }
+
+//         // Check if user has a password field (it should be hashed and stored during registration)
+//         if (!user.password) {
+//             console.log(`User with email ${email} has no password set`);
+//             return res.status(500).json({ error: 'Password not set for user in database' });
+//         }
+
+//         // Debugging statements
+//         console.log('Entered password:', password);
+//         console.log('Stored hashed password:', user.password);
+
+//         // Compare the provided password with the hashed password in the database
+//         const match = await bcrypt.compare(password, user.password);
+//         console.log('Password match result:', match);
+
+//         if (match) {
+//             // Passwords match - Login successful
+//             return res.status(200).json({ message: 'Login successful', user });
+//         } else {
+//             // Passwords don't match
+//             console.log('Password mismatch');
+//             return res.status(401).json({ error: 'Invalid credentials' });
+//         }
+
+//     } catch (err) {
+//         console.error('Error during login:', err);
+//         return res.status(500).json({ error: 'Internal server error' });
+//     }
+// });
 
 
 
@@ -80,6 +142,12 @@ const validatePassword = (password) => {
             user = await Patient.findOne({ email });
         }
 
+        // If not found in Patient, check Hospital collection
+        if (!user) {
+            user = await Hospital.findOne({ email });
+        }
+
+        // If no user is found in any collection
         if (!user) {
             return res.status(404).json({ message: 'User not found', success: false });
         }
@@ -109,8 +177,57 @@ const validatePassword = (password) => {
 });
 
 
-// OTP Verification Route
- authRouter.post('/verify-otp', async (req, res) => {
+// authRouter.post('/verify-otp', async (req, res) => {
+//     const { email, otp } = req.body;
+
+//     try {
+//         let user = await Donor.findOne({ email });
+
+//         // If not found in Donor, check Patient collection
+//         if (!user) {
+//             user = await Patient.findOne({ email });
+//         }
+
+//         // If not found in Patient, check Hospital collection
+//         if (!user) {
+//             user = await Hospital.findOne({ email });
+//         }
+
+//         // If no user is found in any collection
+//         if (!user) {
+//             console.log('User not found');
+//             return res.status(404).json({ message: 'User not found', success: false });
+//         }
+
+
+//         console.log(`Stored OTP: ${user.otp}`);
+//         console.log(`Submitted OTP: ${otp}`);
+//         console.log(`Current Time: ${Date.now()}`);
+//         console.log(`OTP Expiration Time: ${user.otpExpires}`);
+//         if (user.otp !== otp) {
+//             console.log('Invalid OTP');
+//             return res.status(400).json({ message: 'Invalid OTP', success: false });
+//         }
+
+//         if (Date.now() > user.otpExpires) {
+//             console.log('OTP expired');   
+//             return res.status(400).json({ message: 'Expired OTP', success: false });
+//         }
+
+//         // Clear the OTP and expiration time
+//         user.otp = undefined; 
+//         user.otpExpires = undefined; 
+//         await user.save();
+
+//         res.status(200).json({ message: 'OTP verified successfully', success: true });
+//     } catch (error) {
+//         console.error('Error verifying OTP:', error);
+//         res.status(500).json({ message: 'Internal server error', success: false });
+//     }
+// });
+
+
+authRouter.post('/verify-otp', async (req, res) => {
     const { email, otp } = req.body;
 
     try {
@@ -122,6 +239,12 @@ const validatePassword = (password) => {
             user = await Patient.findOne({ email });
         }
 
+        // If not found in Patient, check Hospital collection
+        if (!user) {
+            user = await Hospital.findOne({ email });
+        }
+
+        // If no user is found in any collection
         if (!user) {
             console.log('User not found');
             return res.status(404).json({ message: 'User not found', success: false });
@@ -168,8 +291,12 @@ const validatePassword = (password) => {
             user = await Patient.findOne({ email });
         }
 
+        if(!user) {
+            user = await Hospital.findOne({ email });
+        }
+
         if (!user) {
-            return res.status(404).json({ message: 'User not found', success: false });
+            return res.status(404).json({ message: 'User not ', success: false });
         }
 
         // Validate the new password (implement your own logic)
@@ -192,106 +319,3 @@ const validatePassword = (password) => {
 });
 
 module.exports =  authRouter;
-
-
-
-
-
-
-
-// const express = require('express');
-// const nodemailer = require('nodemailer');
-// const crypto = require('crypto');
-// const User = require('../models/User'); // Adjust path as necessary
-
-// const router = express.Router();
-
-// // OTP Generation and Sending Route
-// router.post('/forgot-password', async (req, res) => {
-//     const { email } = req.body;    
-
-//     try {
-//         // Find user by email    
-//         const user = await User.findOne({ email });
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });    
-//         }
-
-//         // Generate a random OTP
-//         const otp = crypto.randomInt(100000, 999999).toString();
-
-//         // Save the OTP in the user record
-//         user.otp = otp;
-//         await user.save();
-
-//         // Set up the email transporter
-//         const transporter = nodemailer.createTransport({
-//             service: 'gmail',    
-//             auth: {
-//                 user: process.env.EMAIL_USER,    
-//                 pass: process.env.EMAIL_PASS
-//             }
-//         });
-
-//         // Send the OTP email
-//         const mailOptions = {
-//             from: process.env.EMAIL_USER,    
-//             to: email,
-//             subject: 'Your OTP for Password Reset',
-//             text: `Your OTP is ${otp}. It is valid for 10 minutes.`
-//         };
-
-//         await transporter.sendMail(mailOptions);
-
-//         return res.status(200).json({ message: 'OTP sent to your email.' });
-//     } catch (error) {
-//         console.error(error);    
-//         return res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// // OTP Verification Route
-// router.post('/verify-otp', async (req, res) => {
-//     const { email, otp } = req.body;    
-
-//     try {
-//         const user = await User.findOne({ email });    
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });    
-//         }
-
-//         // Check if the OTP is correct
-//         if (user.otp !== otp) {
-//             return res.status(400).json({ message: 'Invalid OTP' });    
-//         }
-
-//         return res.status(200).json({ message: 'OTP verified successfully' });
-//     } catch (error) {
-//         console.error(error);    
-//         return res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// // Password Reset Route
-// router.post('/reset-password', async (req, res) => {
-//     const { email, newPassword } = req.body;    
-
-//     try {
-//         const user = await User.findOne({ email });    
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });    
-//         }
-
-//         // Update the password
-//         user.password = newPassword; // Hash the password before saving
-//         user.otp = undefined; // Clear the OTP
-//         await user.save();
-
-//         return res.status(200).json({ message: 'Password reset successfully' });
-//     } catch (error) {
-//         console.error(error);    
-//         return res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// module.exports = router;

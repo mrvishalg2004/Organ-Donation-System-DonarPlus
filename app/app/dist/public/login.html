@@ -13,13 +13,14 @@
                 <div id="login-header" class="header active">Login</div>
             </div>
             <div class="form-body">
-                <form id="login-form" class="form active">
+                <form id="login-form" onsubmit="loginHospital(event);" class="form active" >
                     <div class="input-group">
                         <label for="login-role">Select Role</label>
                         <select id="login-role" name="role" required>
                             <option value="" disabled selected>Select your role</option>
                             <option value="donor">Donor</option>
                             <option value="patient">Patient</option>
+                            <option value="hospital">Hospital</option>
                         </select>
                     </div>
                     <div class="input-group">
@@ -71,7 +72,7 @@
                 alert('Please select a role.');
                 return;
             }
-        
+            console.log('hii, its login');
             try {
                 const response = await fetch('/api/login', {
                     method: 'POST',
@@ -85,9 +86,13 @@
                 if (response.ok) {
                     localStorage.setItem('userEmail', email);
                     if (role === 'donor') {
+                        console.log("Finding donor");
                         window.location.href = 'donor_dashboard.html'; // Redirect donor to their dashboard
                     } else if (role === 'patient') {
+                        console.log("Finding patient");
                         window.location.href = 'paitent_dashboard.html'; // Redirect patient to their dashboard
+                    }else if(role === 'hospital'){
+                        window.location.href = 'hosp_dashboard.html'; // Redirect hospital to their dashboard
                     }
                 } else {
                     console.error('Login failed:', data.message);
@@ -98,6 +103,7 @@
                 alert('An error occurred. Please try again later.');
             }
         });
+
         
     </script>
 </body>

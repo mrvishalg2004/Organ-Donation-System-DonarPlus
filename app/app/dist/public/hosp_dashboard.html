@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <link href="./css/bootstrap.css" rel="stylesheet">
+    <link href="./css/fontawesome-all.css" rel="stylesheet">
+    <link rel="icon" href="images/organ-donation-logo-new.svg">
+    <script src="app/src/main.js" defer></script>
+
+    <title>Dashboard - DonarPlus</title>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav>
+                        <a href="index.html"><img class="nav-logo" src="./images/mainlogo.png" alt="DonarPlus"></a>
+                        <ul>
+                            <li>
+                                <button class="btn btn-sm btn-primary homepage">
+                                    <a class="hover" href="homepage.html">Homepage</a>
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="row center-box">
+                <div class="col-sm-3">
+                    <div class="left-content width glass-effect">
+                        <a href="donor-registration.html">
+                            <button class="btn btn-lg btn-primary custom">Register Donor</button>
+                        </a>
+                        <br>
+                        <a href="view-donors.html">
+                            <button class="btn btn-lg btn-primary custom">View Donors</button>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="right-content width glass-effect">
+                        <a href="patient-registration.html">
+                            <button class="btn btn-lg btn-primary custom">Register Patient</button>
+                        </a>
+                        <br>
+                        <a href="view-patients.html">
+                            <button class="btn btn-lg btn-primary custom">View Patients</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row center-box">
+                <div class="col-md-4">
+                    <div class="transplant-btn glass-effect" id="size">
+                        <a href="transplant-matching.html">
+                            <button class="btn btn-lg btn-primary custom custom-tm">Transplant Match</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row center-box search-section">
+                <div class="col-md-4 container-1 glass-effect">
+                    <div class="search">
+                        <h2>Search Donor</h2>
+                        <p><input type="text" id="inputDonorMedicalID" placeholder="Enter Aadhar Number"></p>
+                        <div class="details">
+                            <p id="getDonorFullName"></p>
+                            <p id="getDonorAge"></p>
+                            <p id="getDonorGender"></p>
+                            <p id="getDonorBloodType"></p>
+                            <p id="getDonorOrgan"></p>
+                            <p id="getDonorWeight"></p>
+                            <p id="getDonorHeight"></p>
+                            <p id="searchDonorCheck"></p>
+                        </div>
+                        <button type="button" class="btn btn-primary search" onclick="searchDonor()">Search</button>
+                    </div>
+                </div>
+                <div class="col-md-4 container-2 glass-effect">
+                    <div class="search">
+                        <h2>Search Patient</h2>
+                        <p><input type="text" id="inputPatientMedicalID" placeholder="Enter Aadhar Number"></p>
+                        <div class="details">
+                            <p id="getPatientFullName"></p>
+                            <p id="getPatientAge"></p>
+                            <p id="getPatientGender"></p>
+                            <p id="getPatientBloodType"></p>
+                            <p id="getPatientOrgan"></p>
+                            <p id="getPatientWeight"></p>
+                            <p id="getPatientHeight"></p>
+                            <p id="searchPatientCheck"></p>
+                        </div>
+                        <button type="button" class="btn btn-primary search" onclick="searchPatient()">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <!-- Add footer content here -->
+    </footer>
+    <script>
+        // Function to search for a donor
+        function searchDonor() {
+            const aadhar = document.getElementById('inputDonorMedicalID').value;
+            fetch('/api/donor/search', { // Updated the URL to match the new route
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ aadhar })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('searchDonorCheck').textContent = data.error;
+                } else {
+                    document.getElementById('getDonorFullName').textContent = 'Full Name: ' + data.fullname; // Ensure data.fullname matches your schema
+                    document.getElementById('getDonorAge').textContent = 'Age: ' + data.age;
+                    document.getElementById('getDonorGender').textContent = 'Gender: ' + data.gender;
+                    document.getElementById('getDonorBloodType').textContent = 'Blood Type: ' + data.blood_type;
+                    document.getElementById('getDonorOrgan').textContent = 'Organ: ' + data.organ_to_donate;
+                    document.getElementById('searchDonorCheck').textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error searching donor:', error);
+                document.getElementById('searchDonorCheck').textContent = 'Error searching donor. Please try again.';
+            });
+        }
+
+        // Function to search for a patient
+        function searchPatient() {
+            const aadhar = document.getElementById('inputPatientMedicalID').value; // Ensure this ID matches your input field's ID
+            fetch('/api/patient/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ aadhar })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('searchPatientCheck').textContent = data.error;
+                } else {
+                    document.getElementById('getPatientFullName').textContent = 'Full Name: ' + data.fullName;
+                    document.getElementById('getPatientAge').textContent = 'Age: ' + data.age;
+                    document.getElementById('getPatientGender').textContent = 'Gender: ' + data.gender;
+                    document.getElementById('getPatientBloodType').textContent = 'Blood Type: ' + data.blood_type;
+                    document.getElementById('getPatientOrgan').textContent = 'Organ Needed: ' + data.organ_needed;
+                    document.getElementById('searchPatientCheck').textContent = '';
+                }
+            })
+            .catch(error => {
+                console.error('Error searching patient:', error);
+                document.getElementById('searchPatientCheck').textContent = 'Error searching patient. Please try again.';
+            });
+        }
+
+        async function fetchUserData() {
+            // Assuming you store the logged-in user's email in localStorage or sessionStorage after login
+            const email = localStorage.getItem('userEmail'); // You might store this during login
+    
+            if (!email) {
+                console.error('User email not found in storage.');
+                return;
+            }
+    
+            try {
+                // Fetch donor data from the backend
+                const response = await fetch(`/api/hospital/${email}`);
+                const userData = await response.json();
+    
+                if (response.ok) {
+                     // Populate the dashboard with dynamic data
+                     window.location.href = 'hosp_dashboard.html'; 
+                } else {
+                    console.error('Failed to fetch user data:', userData.error);
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+        
+        async function loginHospital() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+        
+            try {
+                // Send email and password to the backend for authentication
+                const response = await fetch('/api/hospital/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+        
+                const userData = await response.json();
+        
+                if (response.ok) {
+                    // If login is successful, redirect to the dashboard
+                    window.location.href = 'hosp_dashboard.html';
+                } else {
+                    // Show error message if authentication fails
+                    console.error('Login failed:', userData.error);
+                    alert('Failed to login. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('An error occurred. Please try again.');
+            }
+        }
+        
+        // Fetch user data once the page loads
+        window.onload = fetchUserData;
+    </script>
+</body>
+</html>

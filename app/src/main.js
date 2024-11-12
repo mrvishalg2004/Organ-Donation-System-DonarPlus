@@ -5,7 +5,6 @@ const app = require('./app');
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 
-
 // MongoDB Atlas connection
 mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="css/hosp_reg.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/fontawesome-all.css" rel="stylesheet">
+    <link rel="icon" href="../images/organ-donation-logo-new.svg">
+    <title>Hospital Registration</title>
+    <style>
+        .step { display: none; }
+        .step.active { display: block; }
+    </style>
+</head>
+<body>
+    <h2>Hospital Registration Form</h2>
+    <form id="hospitalRegistrationForm" action="/register" method="POST">
+        <!-- Step 1: Basic Hospital Information -->
+        <fieldset class="step active">
+            <legend>Basic Hospital Information</legend>
+            <label for="hospitalName">Hospital Name:</label>
+            <input type="text" id="hospitalName" name="hospitalName" required><br><br>
+
+            <label for="hospitalType">Hospital Type:</label>
+            <select id="hospitalType" name="hospitalType" required>
+                <option value="General">General</option>
+                <option value="Specialty">Specialty</option>
+                <option value="Clinic">Clinic</option>
+                <option value="Teaching Hospital">Teaching Hospital</option>
+            </select><br><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" required><br><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br><br>
+
+            <!-- Password input  -->
+            <div class="form-group">
+                <label for="HospitalPassword">Password:</label>
+                <div class="password-wrapper">
+                    <input type="password" id="HospitalPassword" name="password" class="form-control" placeholder="Password" required>
+                    <i class="fa fa-eye password-toggle" id="passwordToggle"></i>
+                </div>
+            </div>    
+        </fieldset>
+
+        <!-- Step 2: Location Details -->
+        <fieldset class="step">
+            <legend>Location Details</legend>
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required><br><br>
+
+            <label for="zipCode">Zip Code:</label>
+            <input type="text" id="zipCode" name="zipCode" required><br><br>
+
+            <label for="contactNumber">Contact Number:</label>
+            <input type="tel" id="contactNumber" name="contactNumber" required><br><br>
+
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required><br><br>
+        </fieldset>
+
+        <!-- Step 3: Hospital Identification -->
+        <fieldset class="step">
+            <legend>Hospital Identification</legend>
+            <label for="registrationNumber">Registration Number:</label>
+            <input type="text" id="registrationNumber" name="registrationNumber" required><br><br>
+
+            <label for="licenseNumber">License Number:</label>
+            <input type="text" id="licenseNumber" name="licenseNumber"><br><br>
+        </fieldset>
+
+        <!-- Step 4: Services and Departments -->
+        <fieldset class="step">
+            <legend>Services and Departments</legend>
+
+            <!-- Departments -->
+            <div class="service-option">
+                <label for="cardiology">Cardiology:</label>
+                <select id="cardiology" name="cardiology">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="emergency">Emergency:</label>
+                <select id="emergency" name="emergency">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="pediatrics">Pediatrics:</label>
+                <select id="pediatrics" name="pediatrics">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="generalMedicine">General Medicine:</label>
+                <select id="generalMedicine" name="generalMedicine">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <br>
+
+            <!-- Special Services -->
+            <div class="service-option">
+                <label for="emergency247">24/7 Emergency:</label>
+                <select id="emergency247" name="emergency247">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="icu">ICU:</label>
+                <select id="icu" name="icu">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="pharmacy">Pharmacy:</label>
+                <select id="pharmacy" name="pharmacy">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+
+            <div class="service-option">
+                <label for="labServices">Lab Services:</label>
+                <select id="labServices" name="labServices">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+            </div>
+        </fieldset>
+
+
+        <!-- Step 5: Capacity and Infrastructure -->
+        <fieldset class="step">
+            <legend>Capacity and Infrastructure</legend>
+            <label for="totalBeds">Total Beds Available:</label>
+            <input type="number" id="totalBeds" name="totalBeds" required><br><br>
+
+            <div class="facility-option">
+                <label for="ambulance">Ambulance Service:</label>
+                <select id="ambulance" name="ambulance">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              
+              <div class="facility-option">
+                <label for="wheelchair">Wheelchair Access:</label>
+                <select id="wheelchair" name="wheelchair">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              
+              <div class="facility-option">
+                <label for="parking">Parking:</label>
+                <select id="parking" name="parking">
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
+                </select>
+              </div>
+              
+        </fieldset>
+
+        <!-- Step 6: Contact for Hospital Management -->
+        <fieldset class="step">
+            <legend>Contact for Hospital Management</legend>
+            <label for="primaryContact">Primary Contact Person:</label>
+            <input type="text" id="primaryContact" name="primaryContact" required><br><br>
+
+            <label for="position">Position:</label>
+            <input type="text" id="position" name="position" required><br><br>
+
+            <label for="contactPhone">Contact Number:</label>
+            <input type="tel" id="contactPhone" name="contactPhone" required><br><br>
+
+            <label for="contactEmail">Email Address:</label>
+            <input type="email" id="contactEmail" name="contactEmail" required><br><br>
+        </fieldset>
+
+        <div id="buttonContainer">
+            <button type="button" id="prevButton" onclick="prevStep()">Previous</button>
+            <button type="button" id="nextButton" onclick="nextStep()">Next</button>
+            <button type="submit" id="submitButton" style="display: none;">Register Hospital</button>
+        </div>
+    </form>
+
+    <!-- JavaScript -->
+    <script>
+        let currentStep = 0;
+        const steps = document.querySelectorAll('.step');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        const submitButton = document.getElementById('submitButton');
+
+
+        // Define the validatePassword function at the beginning of the file
+       // function validatePassword(password) {
+            // Example password validation logic: at least 8 characters, one uppercase, one lowercase, and one digit
+          //  const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+         //   return passwordRegex.test(password);
+       // } 
+
+// Now you can use validatePassword in your route handler without issues
+
+        function showStep(stepIndex) {
+            steps.forEach((step, index) => {
+                step.classList.toggle('active', index === stepIndex);
+            });
+
+            prevButton.style.display = stepIndex === 0 ? 'none' : 'inline';
+            nextButton.style.display = stepIndex === steps.length - 1 ? 'none' : 'inline';
+            submitButton.style.display = stepIndex === steps.length - 1 ? 'inline' : 'none';
+        }
+
+        function nextStep() {
+            if (validateCurrentStep()) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function validateCurrentStep() {
+            const inputs = steps[currentStep].querySelectorAll('input, select');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            return isValid;
+        }
+
+        document.getElementById('hospitalRegistrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            fetch('/api/hospital/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.success ? 'Hospital registered successfully!' : 'Failed to register hospital.');
+                this.reset();
+                showStep(0);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+
+        showStep(currentStep);  // Initialize the form to show the first step
+    </script>
+</body>
+</html>

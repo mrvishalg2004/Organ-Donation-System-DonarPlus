@@ -23,7 +23,9 @@ const donorSchema = new mongoose.Schema({
     next_of_kin: String,
     kin_contact: String,
     password : String,
-    legal_authorization: String
+    legal_authorization: String,
+    otp: { type: String, required: false },
+    otpExpires: { type: Date, required: false }
 
   });
 

@@ -50,9 +50,11 @@
                 <div class="col-md-7 banner">
                     <h1 id="typing-effect">Commit to Becoming a Donor..!!!</h1>
                     <h3>Over 100,000 people are waiting for a life-saving transplant. You have the power to make a difference.</h3>
-                    <button class="btn btn-lg btn-success">
-                        <a class="hover" href="./index.html">Go to Dashboard</a>
-                    </button>
+                    <!-- <button class="btn btn-lg btn-success">
+                    onclick="checkDashboardAccess()"Go to Dashboard
+                        <a href="index.html" id="login-signup-btn" onclick="checkDashboardAccess()">Go to Dashboard</a>
+                    </button> -->
+                    <button class="btn btn-lg btn-success" onclick="checkDashboardAccess()">Go to Dashboard</button>
                 </div>
                 <div class="col-md-4">
                     <div class="slider">
@@ -131,6 +133,7 @@
                                     <p>Who is eligible to become a donor?</p>
                                     <p>Individuals of all ages and medical histories can consider themselves potential donors. The specific organs and tissues that can be donated will depend on the individual’s medical condition at the time of death. A national system matches donors to recipients based on factors such as blood type, body size, illness severity, donor distance, tissue type, and waiting time. Factors such as sexual orientation, gender, gender identity, race, income, celebrity, and social status are never considered.</p>
                                 </div>
+                                
                             </div>
                         </div> <!-- end of accordion -->
                     </div> <!-- end of col -->
@@ -157,6 +160,44 @@
 
     <script src="../public/js/main.js"></script>
     <script>
+        async function checkDashboardAccess() {
+            const email = localStorage.getItem("userEmail"); // User's email, if stored in localStorage
+            const token = localStorage.getItem("authToken"); // User's authentication token
+    
+            if (!token) {
+                window.location.href = "signup_signin.html";
+                return;
+            }
+    
+            try {
+                const response = await fetch(`/api/userType?email=${email}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Send token in Authorization header
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    redirectToDashboard(data.userType);
+                } else {
+                    alert("User not found. Redirecting to login.");
+                    window.location.href = "signup_signin.html";
+                }
+            } catch (error) {
+                console.error("Error fetching user type:", error);
+            }
+        }
+    
+        function redirectToDashboard(userType) {
+            if (userType === "hospital") {
+                window.location.href = "hosp_dashboard.html";
+            } else if (userType === "donor") {
+                window.location.href = "donor_dashboard.html";
+            } else if (userType === "patient") {
+                window.location.href = "patient_dashboard.html";
+            } else {
+                alert("Invalid user type");
+            }
+        }
         const menuToggle = document.getElementById('menu-toggle');
         const nav = document.querySelector('nav');
         
