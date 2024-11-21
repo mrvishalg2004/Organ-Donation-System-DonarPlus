@@ -100,7 +100,6 @@ http://localhost:<PORT>
 ## Team
 
 <img src="./Team/vishal.png" alt="Vishal Golhar" height="70" width="70"> **Vishal Golhar**<br>
-s
 <img src="./Team/sharayu.png" alt="Sharayu Meghare" height="70" width="70"> **Sharayu Meghare** 
 
 ## 🤝 Contact  
