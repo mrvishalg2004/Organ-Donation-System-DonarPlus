@@ -1,4 +1,4 @@
-* {
+ /* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -55,3 +55,201 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+  */
+
+ 
+  /* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Full viewport background with glassmorphism */
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center fixed;
+    background-size: cover;
+    overflow: hidden;
+}
+
+body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* Subtle overlay */
+    z-index: -1;
+}
+
+/* Main container */
+.container {
+    background: rgba(255, 255, 255, 0.15); /* Transparent white */
+    backdrop-filter: blur(10px); /* Glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%; /* Responsive width */
+    text-align: center;
+    color: #fff;
+    animation: fadeIn 1.5s ease-in-out;
+    margin: auto; /* Centers the card even on overflow */
+    overflow-y: auto; /* Adds scrolling if content overflows */
+    max-height: 90vh; /* Prevents cropping on smaller screens */
+}
+
+/* Title styling */
+.container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Section headings */
+.container h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ffae42; /* Highlighted text color */
+}
+
+/* Buttons styling */
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #6e45e2, #88d3ce);
+    box-shadow: 0 4px 12px rgba(110, 69, 226, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #5e3bbf, #78b3ae);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(110, 69, 226, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #ff6f61, #ff9671);
+    box-shadow: 0 4px 12px rgba(255, 111, 97, 0.3);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #e65e54, #f18472);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(255, 111, 97, 0.4);
+}
+
+/* Hover animation */
+.btn:focus,
+.btn:active {
+    outline: none;
+    transform: scale(0.98);
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 600px; /* Adjust card size for larger tablets and small laptops */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    .container h1 {
+        font-size: 26px;
+    }
+
+    .container h2 {
+        font-size: 18px;
+    }
+
+    .btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Smooth button group layout */
+.option-box {
+    margin-bottom: 25px;
+}
+
+.option-box .btn {
+    margin: 10px 0;
+}
+
+/* Shadow effect for headers */
+.container h1,
+.container h2 {
+    text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Style the logo in the top left corner */
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.logo {
+    width: 100px; /* Adjust the logo size as needed */
+    height: auto;
+}
+/* Style the logo in the top left corner */
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.logo {
+    width: 100px; /* Adjust the logo size as needed */
+    height: auto;
+}
+

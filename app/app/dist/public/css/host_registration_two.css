@@ -1,0 +1,269 @@
+/* General Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Professional font */
+    background: url('https://plus.unsplash.com/premium_photo-1664475473789-1ea7ac194527?q=80&w=2944&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); /* Background image */
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(10px); /* Set blur effect to 4px */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    opacity: 40000; /* Set opacity to 0.1 */
+}
+
+/* Form Container Styling */
+.form-container {
+    width: 90%;
+    max-width: 400px;  /* Ensures compact width */
+    margin: 10px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.7);  /* Glassmorphism effect */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    box-sizing: border-box;
+}
+
+/* Form Title */
+.form-title {
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+
+/* Header Styling */
+h2 {
+    text-align: center;
+    color: #fff;
+    font-size: 1.6em;
+    margin-bottom: 15px;
+}
+
+/* Form Styling */
+form {
+    background: rgba(255, 255, 255, 0.7);  /* Glassmorphism Effect */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    width: 90%;  /* Ensure it's always responsive */
+    max-width: 400px;  /* Smaller max-width */
+    margin: 10px;
+    box-sizing: border-box;
+}
+
+/* Fieldset Styling */
+fieldset {
+    border: 2px solid transparent;
+    padding: 12px;
+    margin-bottom: 18px;
+    border-radius: 8px;
+    display: none;
+}
+
+fieldset.active {
+    display: block;
+}
+
+/* Legend Styling */
+legend {
+    font-size: 1em;
+    font-weight: bold;
+    color: #2c3e50;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight background */
+    border-radius: 6px;
+    display: inline-block;
+}
+
+/* Label Styling */
+label {
+    font-size: 0.9em;
+    color: #34495e;
+    margin-bottom: 6px;
+    display: block;
+}
+
+/* Input Field Styling */
+input[type="text"], 
+input[type="email"], 
+input[type="password"], 
+input[type="tel"], 
+input[type="number"], 
+select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #dfe6e9;
+    border-radius: 8px;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.5);  /* Glassmorphism for inputs */
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus, 
+input[type="email"]:focus, 
+input[type="password"]:focus, 
+input[type="tel"]:focus, 
+input[type="number"]:focus, 
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Password Wrapper */
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Button Container */
+#buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 8px 18px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #95a5a6;
+    cursor: not-allowed;
+}
+
+/* Input Validity */
+input.is-invalid {
+    border-color: red;
+}
+
+input.is-invalid:focus {
+    outline-color: red;
+}
+
+/* Select Styling */
+select {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    border: 2px solid #dfe6e9;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+    outline: none;
+}
+
+/* Media Queries for Responsiveness */
+@media screen and (max-width: 768px) {
+    .form-container {
+        width: 95%;  /* Ensure the form takes up 95% of the screen */
+        padding: 10px;  /* Reduce padding for smaller screens */
+    }
+
+    .form-title {
+        font-size: 1.2em;  /* Smaller title for mobile view */
+    }
+
+    label {
+        font-size: 0.8em;
+    }
+
+    input[type="text"], 
+    input[type="email"], 
+    input[type="password"], 
+    input[type="tel"], 
+    input[type="number"], 
+    select {
+        font-size: 0.85em;
+        padding: 6px;
+    }
+
+    button {
+        font-size: 0.85em;
+        padding: 6px 14px;
+    }
+
+    #buttonContainer {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    /* Responsive adjustments to icons */
+    legend::before {
+        width: 16px;  /* Even smaller icons on mobile */
+        height: 16px;
+        margin-right: 6px;
+    }
+}
+
+/* Custom Icons for Sections */
+fieldset:nth-child(1) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/hospital-room.png');  /* Basic Hospital Icon */
+}
+
+fieldset:nth-child(2) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/worldwide-location.png');  /* Location Icon */
+}
+
+fieldset:nth-child(3) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/identification-documents.png');  /* ID Icon */
+}
+
+fieldset:nth-child(4) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/department-store.png');  /* Services Icon */
+}
+
+fieldset:nth-child(5) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/building.png');  /* Infrastructure Icon */
+}
+
+fieldset:nth-child(6) legend::before {
+    content: url('https://img.icons8.com/ios/50/000000/person.png');  /* Contact Icon */
+}
+
+/* Style the logo in the top left corner */
+.logo-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.logo {
+    width: 100px; /* Adjust the logo size as needed */
+    height: auto;
+}
