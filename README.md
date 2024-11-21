@@ -68,7 +68,7 @@ DonorPlus/
 - **Frontend**: React.js, Tailwind CSS  
 - **Backend**: Node.js, Express.js  
 - **Database**: MongoDB  
-- **Hosting**: [Your Hosting Provider, e.g., Vercel,Netlify]  
+<!-- - **Hosting**: [Your Hosting Provider, e.g., Vercel,Netlify]   -->
 
 ## 🌐 How to Run Locally  
 
